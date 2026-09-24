@@ -1,0 +1,18 @@
+enum AdminRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model AdminRequest {
+  id        String             @id @default(uuid())
+  name      String
+  email     String             @unique
+  password  String
+  reason    String?
+  status    AdminRequestStatus @default(PENDING)
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+
+  @@map("admin_request")
+}

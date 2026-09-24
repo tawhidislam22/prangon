@@ -1,0 +1,24 @@
+model PlatformAdmin {
+  id        String       @id @default(uuid())
+  userId    String       @unique
+  role      PlatformRole @default(SUPPORT)
+  createdAt DateTime     @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("platform_admins")
+}
+
+model PlatformAuditLog {
+  id        String   @id @default(uuid())
+  adminId   String
+  action    String
+  targetId  String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  admin User @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  @@index([adminId, createdAt])
+  @@map("platform_audit_logs")
+}

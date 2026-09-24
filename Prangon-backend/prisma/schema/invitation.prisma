@@ -1,0 +1,20 @@
+model Invitation {
+  id          String           @id @default(uuid())
+  email       String
+  role        WorkspaceRole    @default(MEMBER)
+  status      InvitationStatus @default(PENDING)
+  token       String           @unique
+  expiresAt   DateTime
+
+  workspaceId String
+  workspace   Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  inviterId   String
+  inviter     User             @relation("InvitationSender", fields: [inviterId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  @@map("invitation")
+  @@index([workspaceId])
+}

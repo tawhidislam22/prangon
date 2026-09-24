@@ -1,0 +1,47 @@
+./prangon-backend/node_modules
+./prangon-backend/dist
+./prangon-backend/.env
+./prangon-backend/.env.*
+./prangon-backend/!.env.example
+
+./prangon-backend/src/generated
+./prangon-backend/.vercel
+
+./prangon-frontend/node_modules
+./prangon-frontend/.pnp
+./prangon-frontend/.pnp.*
+./prangon-frontend/.yarn/*
+./prangon-frontend/!.yarn/patches
+./prangon-frontend/!.yarn/plugins
+./prangon-frontend/!.yarn/releases
+./prangon-frontend/!.yarn/versions
+
+# testing
+./prangon-frontend/coverage
+
+# next.js
+./prangon-frontend/.next/
+./prangon-frontend/out/
+
+# production
+./prangon-frontend/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+./prangon-frontend/.env*
+
+# vercel
+./prangon-frontend/.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts

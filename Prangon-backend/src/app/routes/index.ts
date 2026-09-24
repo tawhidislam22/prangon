@@ -1,0 +1,41 @@
+import { Router } from "express";
+import { AuthRoutes } from "../module/auth/auth.route";
+import { UserRoutes } from "../module/user/user.route";
+import { WorkspaceRoutes } from "../module/workspace/workspace.route";
+import { ProjectRoutes } from "../module/project/project.route";
+import { TaskRoutes } from "../module/task/task.route";
+import { SubscriptionRoutes } from "../module/subscription/subscription.route";
+import { workspaceMemberRoutes } from "../module/workspaceMember/workspaceMember.route";
+import { invitationRoutes } from "../module/invitation/invitation.route";
+import { activityLogRoutes } from "../module/activityLog/activityLog.route";
+import { notificationRoutes } from "../module/notification/notification.route";
+import { taskCommentRoutes } from "../module/taskComment/taskComment.route";
+import { UploadRoutes } from "../module/upload/upload.route";
+import { PaymentRoutes } from "../module/payment/payment.route";
+import { AdminRequestRoutes } from "../module/adminRequest/adminRequest.route";
+import { PlatformAdminRoutes } from "../module/platformAdmin/platformAdmin.route";
+
+const router = Router();
+
+router.use("/auth", AuthRoutes);
+router.use("/users", UserRoutes);
+router.use("/user", UserRoutes);
+router.use("/workspaces", WorkspaceRoutes);
+router.use("/workspace", WorkspaceRoutes);
+router.use("/workspace-members", workspaceMemberRoutes);
+router.use("/invitations", invitationRoutes);
+router.use("/invitation", invitationRoutes);
+router.use("/projects", ProjectRoutes);
+router.use("/tasks", TaskRoutes);
+router.use("/task-comments", taskCommentRoutes);
+router.use("/activity-logs", activityLogRoutes);
+router.use("/notifications", notificationRoutes);
+router.use("/subscriptions", SubscriptionRoutes);
+router.use("/subscription", SubscriptionRoutes);
+router.use("/upload", UploadRoutes);
+router.use("/payments", PaymentRoutes);
+router.use("/payment", PaymentRoutes);
+router.use("/admin-requests", AdminRequestRoutes);
+router.use("/platform-admin", PlatformAdminRoutes);
+
+export const IndexRoutes = router;

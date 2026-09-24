@@ -1,0 +1,72 @@
+enum Role {
+  SUPER_ADMIN
+  USER
+  OWNER
+  MEMBER
+}
+
+enum WorkspaceRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+  DELETED
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+enum SubscriptionTier {
+  FREE
+  PREMIUM
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELED
+  PAST_DUE
+  UNPAID
+}
+
+enum InvitationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  EXPIRED
+}
+
+enum NotificationType {
+  TASK_ASSIGNED
+  TASK_UPDATED
+  MENTION
+  SYSTEM
+}
+
+enum OnboardingStatus {
+  PENDING_COMPANY
+  PENDING_PLAN
+  PENDING_PAYMENT
+  PENDING_WORKSPACE
+  COMPLETED
+}
+
+enum PlatformRole {
+  SUPER_ADMIN
+  BILLING_ADMIN
+  SUPPORT
+}
+

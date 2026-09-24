@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Payment Receipt - <%= locals.invoiceNumber || 'Prangon Invoice' %></title>
+  <style type="text/css">
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    body { margin: 0; padding: 0; width: 100% !important; background-color: #F8FAFC; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    @media screen and (max-width: 600px) {
+      .email-container { width: 100% !important; margin: 0 !important; }
+      .content-padding { padding: 24px 20px !important; }
+    }
+  </style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #F8FAFC; color: #1E293B;">
+  <div style="display: none; font-size: 1px; color: #F8FAFC; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all;">
+    <%= previewText || ('Receipt for your Prangon subscription (' + (locals.amountPaid || '$19.00') + ')') %>
+    &#847; &zwnj; &nbsp; &#8199; &shy; &#847; &zwnj; &nbsp; &#8199; &shy; &#847; &zwnj; &nbsp; &#8199; &shy; &#847; &zwnj; &nbsp; &#8199; &shy;
+  </div>
+
+  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #F8FAFC; padding: 32px 12px;">
+    <tr>
+      <td align="center">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" class="email-container" style="max-width: 560px; background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+          
+          <!-- Header -->
+          <tr>
+            <td align="left" style="padding: 28px 32px; background-color: #FFFFFF; border-bottom: 1px solid #F1F5F9;">
+              <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td>
+                    <table border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td style="background-color: #2563EB; width: 34px; height: 34px; border-radius: 8px; text-align: center; vertical-align: middle; color: #FFFFFF; font-weight: 800; font-size: 18px; line-height: 34px;">
+                          P
+                        </td>
+                        <td style="padding-left: 12px; font-size: 20px; font-weight: 700; color: #0F172A; letter-spacing: -0.5px;">
+                          Prangon
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td align="right" style="font-size: 12px; color: #059669; font-weight: 600; background-color: #D1FAE5; padding: 4px 10px; border-radius: 6px;">
+                    Paid
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Content -->
+          <tr>
+            <td class="content-padding" style="padding: 32px 32px 24px 32px;">
+              <p style="margin: 0 0 6px 0; font-size: 13px; font-weight: 600; text-transform: uppercase; color: #64748B; letter-spacing: 0.5px;">
+                Payment Receipt
+              </p>
+              <h1 style="margin: 0 0 16px 0; font-size: 26px; font-weight: 800; color: #0F172A; line-height: 1.2;">
+                <%= locals.amountPaid || '$19.00' %>
+              </h1>
+              
+              <p style="margin: 0 0 20px 0; font-size: 14px; line-height: 1.6; color: #475569;">
+                Hi <%= locals.customerName ? customerName : 'there' %>, thank you for your payment. Here is the receipt for your <strong><%= locals.workspaceName || 'Prangon' %></strong> workspace subscription.
+              </p>
+
+              <!-- Invoice Details Card -->
+              <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; margin-bottom: 24px;">
+                <tr>
+                  <td style="padding: 16px 20px;">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="font-size: 13px; line-height: 2;">
+                      <tr>
+                        <td style="color: #64748B;">Invoice Number</td>
+                        <td align="right" style="font-family: monospace; font-weight: 600; color: #0F172A;"><%= locals.invoiceNumber || ('INV-' + Date.now().toString().slice(-6)) %></td>
+                      </tr>
+                      <tr>
+                        <td style="color: #64748B;">Billing Date</td>
+                        <td align="right" style="color: #0F172A;"><%= locals.date || new Date().toLocaleDateString() %></td>
+                      </tr>
+                      <tr>
+                        <td style="color: #64748B;">Payment Method</td>
+                        <td align="right" style="color: #0F172A;">Card ending in <%= locals.cardLast4 || '4242' %></td>
+                      </tr>
+                      <tr>
+                        <td style="color: #64748B;">Workspace</td>
+                        <td align="right" style="font-weight: 600; color: #0F172A;"><%= locals.workspaceName || 'Workspace' %></td>
+                      </tr>
+                    </table>
+
+                    <div style="border-top: 1px solid #E2E8F0; margin: 12px 0 12px 0;"></div>
+
+                    <!-- Line items -->
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="font-size: 13px;">
+                      <tr>
+                        <td style="font-weight: 600; color: #0F172A;"><%= locals.planName || 'Prangon Premium (Monthly)' %></td>
+                        <td align="right" style="font-weight: 700; color: #0F172A;"><%= locals.amountPaid || '$19.00' %></td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- CTA -->
+              <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin: 20px 0 24px 0;">
+                <tr>
+                  <td align="center">
+                    <table border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td align="center" style="border-radius: 8px; background-color: #2563EB;">
+                          <a href="<%= locals.billingUrl || (frontendUrl + '/dashboard') %>" target="_blank" style="font-size: 14px; font-weight: 600; color: #FFFFFF; text-decoration: none; padding: 12px 28px; border-radius: 8px; display: inline-block;">
+                            Manage Subscription & Invoices &rarr;
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin: 0; font-size: 12px; line-height: 1.5; color: #94A3B8;">
+                If you have questions about this charge, reply to this email or reach us at <a href="mailto:<%= supportEmail %>" style="color: #2563EB;"><%= supportEmail %></a>.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding: 24px 32px; background-color: #F8FAFC; border-top: 1px solid #F1F5F9; font-size: 12px; color: #94A3B8; line-height: 1.6;">
+              <p style="margin: 0 0 6px 0;">
+                <%= companyAddress %>
+              </p>
+              <p style="margin: 0;">
+                © <%= currentYear %> Prangon Technologies. All rights reserved. &bull; 
+                <a href="<%= frontendUrl %>/legal/refund-policy" style="color: #2563EB; text-decoration: underline;">Refund Policy</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

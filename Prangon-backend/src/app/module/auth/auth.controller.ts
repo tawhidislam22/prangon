@@ -214,6 +214,17 @@ const resetPassword = catchAsync(
 
 // /api/v1/auth/login/google?redirect=/profile
 const googleLogin = catchAsync((req: Request, res: Response) => {
+    try {
+        const configuredUrl = new URL(envVars.BETTER_AUTH_URL);
+        const reqHost = req.get("host");
+        if (reqHost && configuredUrl.host && reqHost !== configuredUrl.host) {
+            const redirectUrl = `${configuredUrl.protocol}//${configuredUrl.host}${req.originalUrl}`;
+            return res.redirect(redirectUrl);
+        }
+    } catch {
+        // Continue if URL parsing fails
+    }
+
     const redirectPath = req.query.redirect || "/dashboard";
 
     const encodedRedirectPath = encodeURIComponent(redirectPath as string);
@@ -223,13 +234,14 @@ const googleLogin = catchAsync((req: Request, res: Response) => {
     res.render("googleRedirect", {
         callbackURL : callbackURL,
         betterAuthUrl : envVars.BETTER_AUTH_URL,
+        frontendUrl : envVars.FRONTEND_URL,
     })
 })
 
 const googleLoginSuccess = catchAsync(async (req: Request, res: Response) => {
     const redirectPath = req.query.redirect as string || "/dashboard";
 
-    const sessionToken = req.cookies["better-auth.session_token"];
+    const sessionToken = req.cookies["better-auth.session_token"] || req.cookies["__Secure-better-auth.session_token"];
 
     if(!sessionToken){
         return res.redirect(`${envVars.FRONTEND_URL}/login?error=oauth_failed`);

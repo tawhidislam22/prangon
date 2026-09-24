@@ -3,39 +3,38 @@ import { ProjectController } from "./project.controller";
 import { validateRequest } from "../../middleware/validateRequest";
 import { ProjectValidation } from "./project.validation";
 import { checkAuth } from "../../middleware/checkAuth";
-import { Role } from "../../../generated/prisma/enums";
 
 const router = Router();
 
 router.post(
   "/",
-  checkAuth(Role.SUPER_ADMIN, Role.USER),
+  checkAuth(),
   validateRequest(ProjectValidation.createProjectSchema),
   ProjectController.createProject
 );
 
 router.get(
   "/",
-  checkAuth(Role.SUPER_ADMIN, Role.USER),
+  checkAuth(),
   ProjectController.getProjectsByWorkspace
 );
 
 router.get(
   "/:projectId",
-  checkAuth(Role.SUPER_ADMIN, Role.USER),
+  checkAuth(),
   ProjectController.getProjectById
 );
 
 router.patch(
   "/:projectId",
-  checkAuth(Role.SUPER_ADMIN, Role.USER),
+  checkAuth(),
   validateRequest(ProjectValidation.updateProjectSchema),
   ProjectController.updateProject
 );
 
 router.delete(
   "/:projectId",
-  checkAuth(Role.SUPER_ADMIN, Role.USER),
+  checkAuth(),
   ProjectController.deleteProject
 );
 

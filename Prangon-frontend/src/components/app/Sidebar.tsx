@@ -64,28 +64,28 @@ export function Sidebar({
       items: [
         {
           name: "Dashboard",
-          href: `/w/${workspaceSlug}/dashboard`,
+          href: role === "MEMBER" ? "/dashboard" : `/owner/dashboard`,
           icon: LayoutDashboard,
           visible: true,
         },
         {
           name: "Projects",
-          href: `/w/${workspaceSlug}/projects`,
+          href: `/owner/projects`,
           icon: FolderKanban,
           visible: true,
         },
         {
           name: "Members",
-          href: `/w/${workspaceSlug}/members`,
+          href: `/owner/members`,
           icon: Users,
-          visible: isOwner || isAdmin,
-          children: [
+          visible: true,
+          children: (isOwner || isAdmin) ? [
             {
               name: "Invitations",
-              href: `/w/${workspaceSlug}/members/invitations`,
+              href: `/owner/members/invitations`,
               icon: UserPlus,
             },
-          ],
+          ] : undefined,
         },
       ],
     },
@@ -95,13 +95,13 @@ export function Sidebar({
       items: [
         {
           name: "Subscription",
-          href: `/w/${workspaceSlug}/billing`,
+          href: `/owner/billing`,
           icon: CreditCard,
           visible: isOwner,
           children: [
             {
               name: "Invoices",
-              href: `/w/${workspaceSlug}/billing/invoices`,
+              href: `/owner/billing/invoices`,
               icon: FileText,
             },
           ],
@@ -113,19 +113,19 @@ export function Sidebar({
       items: [
         {
           name: "Integrations",
-          href: `/w/${workspaceSlug}/integrations`,
+          href: `/owner/integrations`,
           icon: Puzzle,
           visible: isOwner || isAdmin,
         },
         {
           name: "Notifications",
-          href: `/w/${workspaceSlug}/notifications`,
+          href: `/owner/notifications`,
           icon: Bell,
           visible: true,
         },
         {
           name: "Activity Log",
-          href: `/w/${workspaceSlug}/activity`,
+          href: `/owner/activity`,
           icon: Activity,
           visible: isOwner || isAdmin,
         },
@@ -133,29 +133,29 @@ export function Sidebar({
     },
     {
       label: "Settings",
-      visible: isOwner || isAdmin,
+      visible: true,
       items: [
         {
           name: "General",
-          href: `/w/${workspaceSlug}/settings/general`,
+          href: `/owner/settings/general`,
           icon: Settings,
           visible: isOwner,
         },
         {
           name: "Roles & Permissions",
-          href: `/w/${workspaceSlug}/settings/roles`,
+          href: `/owner/settings/roles`,
           icon: Shield,
           visible: isOwner,
         },
         {
           name: "Security",
-          href: `/w/${workspaceSlug}/settings/security`,
+          href: `/owner/settings/security`,
           icon: Shield,
-          visible: isOwner || isAdmin,
+          visible: true,
         },
         {
           name: "Danger Zone",
-          href: `/w/${workspaceSlug}/settings/danger-zone`,
+          href: `/owner/settings/danger-zone`,
           icon: AlertTriangle,
           visible: isOwner,
         },
@@ -231,11 +231,11 @@ export function Sidebar({
       {/* Sidebar Footer: [Your profile] */}
       <div className="p-3 border-t border-border mt-auto">
         <Link
-          href={`/w/${workspaceSlug}/profile`}
+          href={`/owner/profile`}
           onClick={onNavigate}
           className={cn(
             "flex items-center gap-2.5 px-3 py-2 text-xs font-medium rounded-lg transition-colors",
-            pathname === `/w/${workspaceSlug}/profile`
+            pathname === `/owner/profile`
               ? "bg-cobalt text-white font-semibold"
               : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
           )}

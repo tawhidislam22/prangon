@@ -1,4 +1,4 @@
-export type UserRole = "SUPER_ADMIN" | "USER" | "OWNER" | "MEMBER";
+export type UserRole = "SUPER_ADMIN" | "ADMIN" | "OWNER" | "MEMBER";
 
 export const authRoutes = [ "/login", "/register", "/forgot-password", "/reset-password", "/verify-email" ];
 
@@ -12,12 +12,17 @@ export type RouteConfig = {
 }
 
 export const commonProtectedRoutes : RouteConfig = {
-    exact : ["/my-profile", "/change-password"],
+    exact : ["/my-profile", "/change-password", "/accept-invitation"],
     pattern : []
 }
 
-export const userProtectedRoutes : RouteConfig = {
-    pattern: [/^\/dashboard/, /^\/workspaces/, /^\/w/, /^\/onboarding/], 
+export const adminProtectedRoutes : RouteConfig = {
+    pattern: [/^\/admin/], 
+    exact : []
+};
+
+export const workspaceProtectedRoutes : RouteConfig = {
+    pattern: [/^\/dashboard/, /^\/workspaces/, /^\/owner/, /^\/onboarding/], 
     exact : []
 };
 
@@ -28,10 +33,13 @@ export const isRouteMatches = (pathname : string, routes : RouteConfig) => {
     return routes.pattern.some((pattern : RegExp) => pattern.test(pathname));
 }
 
-export const getRouteOwner = (pathname : string) : "SUPER_ADMIN" | "USER" | "COMMON" | null => {
-    
-    if(isRouteMatches(pathname, userProtectedRoutes)) {
-        return "USER";
+export const getRouteOwner = (pathname : string) : "SUPER_ADMIN" | "WORKSPACE" | "COMMON" | null => {
+    if(isRouteMatches(pathname, adminProtectedRoutes)) {
+        return "SUPER_ADMIN";
+    }
+
+    if(isRouteMatches(pathname, workspaceProtectedRoutes)) {
+        return "WORKSPACE";
     }
 
     if(isRouteMatches(pathname, commonProtectedRoutes)) {
@@ -42,7 +50,11 @@ export const getRouteOwner = (pathname : string) : "SUPER_ADMIN" | "USER" | "COM
 }
 
 export const getDefaultDashboardRoute = (role : UserRole) => {
-    if (role === "SUPER_ADMIN" || role === "USER" || role === "OWNER" || role === "MEMBER") {
+    if (role === "SUPER_ADMIN") {
+        return "/admin/dashboard";
+    }
+
+    if (role === "ADMIN" || role === "OWNER" || role === "MEMBER") {
         return "/dashboard";
     }
 
@@ -57,7 +69,11 @@ export const isValidRedirectForRole = (redirectPath : string, role : UserRole) =
         return true;
     }
 
-    if(routeOwner === role || (routeOwner === "USER" && (role === "OWNER" || role === "MEMBER" || role === "USER"))){
+    if(routeOwner === "SUPER_ADMIN" && role === "SUPER_ADMIN") {
+        return true;
+    }
+
+    if(routeOwner === "WORKSPACE" && (role === "OWNER" || role === "ADMIN" || role === "MEMBER")){
         return true;
     }
 

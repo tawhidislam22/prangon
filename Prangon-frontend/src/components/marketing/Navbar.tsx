@@ -5,8 +5,28 @@ import { getUserInfo, logoutUser } from "@/services/auth.services";
 import { getDefaultDashboardRoute } from "@/lib/authUtils";
 import { PrangonLogo } from "@/components/PrangonLogo";
 
+import { httpClient } from "@/lib/axios/httpClient";
+
 export async function Navbar() {
   const userInfo = await getUserInfo();
+
+  let dashboardRoute = "/dashboard";
+  if (userInfo?.role === "SUPER_ADMIN") {
+    dashboardRoute = "/admin/dashboard";
+  } else if (userInfo) {
+    if (userInfo.role === "MEMBER") {
+      dashboardRoute = "/dashboard";
+    } else {
+      try {
+        const res = await httpClient.get<any[]>("/workspaces");
+        if (res.data && res.data.length > 0) {
+          dashboardRoute = `/owner/dashboard`;
+        }
+      } catch {
+        dashboardRoute = "/dashboard";
+      }
+    }
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-line bg-paper text-ink">
@@ -25,7 +45,7 @@ export async function Navbar() {
           {userInfo ? (
             <>
               <Button asChild className="bg-cobalt hover:bg-cobalt/90 text-white rounded-md">
-                <Link href={getDefaultDashboardRoute(userInfo.role)}>Dashboard</Link>
+                <Link href={dashboardRoute}>Dashboard</Link>
               </Button>
               <form action={logoutUser}>
                 <Button type="submit" variant="outline" className="rounded-md text-red-600 hover:text-red-700">

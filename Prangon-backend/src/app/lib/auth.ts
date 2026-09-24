@@ -26,7 +26,7 @@ export const auth = betterAuth({
             // callbackUrl: envVars.GOOGLE_CALLBACK_URL,
             mapProfileToUser: ()=>{
                 return {
-                    role : Role.USER,
+                    role : Role.MEMBER,
                     status : UserStatus.ACTIVE,
                     needPasswordChange : false,
                     emailVerified : true,
@@ -48,7 +48,7 @@ export const auth = betterAuth({
             role: {
                 type: "string",
                 required: true,
-                defaultValue: Role.USER
+                defaultValue: Role.MEMBER
             },
 
             status: {
@@ -170,7 +170,14 @@ export const auth = betterAuth({
         signIn : `${envVars.BETTER_AUTH_URL}/api/v1/auth/google/success`,
     },
 
-    trustedOrigins: [process.env.BETTER_AUTH_URL || "http://localhost:5000", envVars.FRONTEND_URL],
+    trustedOrigins: [
+        process.env.BETTER_AUTH_URL || "http://localhost:5000",
+        envVars.FRONTEND_URL,
+        "http://localhost:3000",
+        "http://localhost:5000",
+        "http://127.0.0.1:3000",
+        "http://127.0.0.1:5000",
+    ],
 
     advanced: {
         // disableCSRFCheck: true,

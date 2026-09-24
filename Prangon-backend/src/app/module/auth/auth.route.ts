@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { AuthController } from "./auth.controller";
 import { checkAuth } from "../../middleware/checkAuth";
-import { Role } from "../../../generated/prisma/enums";
 
 const router = Router();
 
@@ -10,20 +9,20 @@ router.post('/login',AuthController.loginUser)
 
 router.route('/me')
     .get(
-        checkAuth(Role.SUPER_ADMIN, Role.USER),
+        checkAuth(),
         AuthController.getMe
     )
     .post(
-        checkAuth(Role.SUPER_ADMIN, Role.USER),
+        checkAuth(),
         AuthController.getMe
     )
 
 router.post('/refresh-token',AuthController.getNewToken)
 router.post('/change-password',
-    checkAuth(Role.SUPER_ADMIN, Role.USER),
+    checkAuth(),
     AuthController.changePassword)
 router.post('/logout',
-    checkAuth(Role.SUPER_ADMIN, Role.USER),
+    checkAuth(),
     AuthController.logoutUser
 )
 

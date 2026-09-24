@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { setActiveWorkspaceAction } from "@/app/owner/workspaceActions";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import {
@@ -37,6 +38,7 @@ import { logoutUser } from "@/services/auth.services";
 interface TopbarProps {
   workspaceSlug: string;
   workspaceName: string;
+  role?: string;
   userEmail?: string;
   userName?: string;
   workspaces?: Array<{ id: string; name: string; slug: string }>;
@@ -46,6 +48,7 @@ interface TopbarProps {
 export function Topbar({
   workspaceSlug,
   workspaceName,
+  role = "OWNER",
   userEmail = "user@example.com",
   userName = "User",
   workspaces = [],
@@ -109,7 +112,10 @@ export function Topbar({
               {workspaces.map((ws) => (
                 <DropdownMenuItem
                   key={ws.slug}
-                  onClick={() => router.push(`/w/${ws.slug}/dashboard`)}
+                  onClick={async () => {
+                    await setActiveWorkspaceAction(ws.slug);
+                    router.push(role === "MEMBER" ? "/dashboard" : `/owner/dashboard`);
+                  }}
                   className="cursor-pointer gap-2 text-xs"
                 >
                   <Building2 className="size-3.5 text-muted-foreground" />
@@ -151,7 +157,7 @@ export function Topbar({
 
         {/* Right: Actions, Notifications, ModeToggle, Avatar */}
         <div className="flex items-center gap-2">
-          <Link href={`/w/${workspaceSlug}/notifications`}>
+          <Link href={`/owner/notifications`}>
             <Button variant="ghost" size="icon" className="relative size-9">
               <Bell className="size-4 text-muted-foreground" />
               <span className="absolute top-2 right-2 size-2 bg-cobalt rounded-full ring-2 ring-card" />
@@ -178,7 +184,7 @@ export function Topbar({
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild className="cursor-pointer text-xs">
-                <Link href={`/w/${workspaceSlug}/profile`} className="flex items-center gap-2">
+                <Link href={`/owner/profile`} className="flex items-center gap-2">
                   <User className="size-3.5" />
                   <span>Profile Settings</span>
                 </Link>
@@ -202,49 +208,49 @@ export function Topbar({
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Navigation">
-            <CommandItem onSelect={() => navigateTo(`/w/${workspaceSlug}/dashboard`)}>
+            <CommandItem onSelect={() => navigateTo(`/owner/dashboard`)}>
               Dashboard Overview
             </CommandItem>
-            <CommandItem onSelect={() => navigateTo(`/w/${workspaceSlug}/projects`)}>
+            <CommandItem onSelect={() => navigateTo(`/owner/projects`)}>
               Projects Board
             </CommandItem>
-            <CommandItem onSelect={() => navigateTo(`/w/${workspaceSlug}/members`)}>
+            <CommandItem onSelect={() => navigateTo(`/owner/members`)}>
               Team Members
             </CommandItem>
-            <CommandItem onSelect={() => navigateTo(`/w/${workspaceSlug}/members/invitations`)}>
+            <CommandItem onSelect={() => navigateTo(`/owner/members/invitations`)}>
               Pending Invitations
             </CommandItem>
-            <CommandItem onSelect={() => navigateTo(`/w/${workspaceSlug}/billing`)}>
+            <CommandItem onSelect={() => navigateTo(`/owner/billing`)}>
               Billing & Subscription
             </CommandItem>
-            <CommandItem onSelect={() => navigateTo(`/w/${workspaceSlug}/billing/invoices`)}>
+            <CommandItem onSelect={() => navigateTo(`/owner/billing/invoices`)}>
               Invoices & Receipts
             </CommandItem>
-            <CommandItem onSelect={() => navigateTo(`/w/${workspaceSlug}/integrations`)}>
+            <CommandItem onSelect={() => navigateTo(`/owner/integrations`)}>
               Connected Apps
             </CommandItem>
-            <CommandItem onSelect={() => navigateTo(`/w/${workspaceSlug}/notifications`)}>
+            <CommandItem onSelect={() => navigateTo(`/owner/notifications`)}>
               Notifications
             </CommandItem>
-            <CommandItem onSelect={() => navigateTo(`/w/${workspaceSlug}/activity`)}>
+            <CommandItem onSelect={() => navigateTo(`/owner/activity`)}>
               Workspace Activity Log
             </CommandItem>
           </CommandGroup>
           <CommandSeparator />
           <CommandGroup heading="Settings">
-            <CommandItem onSelect={() => navigateTo(`/w/${workspaceSlug}/settings/general`)}>
+            <CommandItem onSelect={() => navigateTo(`/owner/settings/general`)}>
               General Workspace Settings
             </CommandItem>
-            <CommandItem onSelect={() => navigateTo(`/w/${workspaceSlug}/settings/roles`)}>
+            <CommandItem onSelect={() => navigateTo(`/owner/settings/roles`)}>
               Roles & Permissions Matrix
             </CommandItem>
-            <CommandItem onSelect={() => navigateTo(`/w/${workspaceSlug}/settings/security`)}>
+            <CommandItem onSelect={() => navigateTo(`/owner/settings/security`)}>
               Security & Active Sessions
             </CommandItem>
-            <CommandItem onSelect={() => navigateTo(`/w/${workspaceSlug}/settings/danger-zone`)}>
+            <CommandItem onSelect={() => navigateTo(`/owner/settings/danger-zone`)}>
               Danger Zone
             </CommandItem>
-            <CommandItem onSelect={() => navigateTo(`/w/${workspaceSlug}/profile`)}>
+            <CommandItem onSelect={() => navigateTo(`/owner/profile`)}>
               Personal Profile
             </CommandItem>
           </CommandGroup>

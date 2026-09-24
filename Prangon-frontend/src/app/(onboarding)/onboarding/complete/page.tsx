@@ -54,7 +54,7 @@ export default function OnboardingCompletePage() {
   const handleGoToDashboard = () => {
     setNavigating(true);
     const targetSlug = workspaceSlug || searchParams.get("workspace") || "";
-    const target = targetSlug && targetSlug !== "dashboard" ? `/w/${targetSlug}/dashboard` : "/dashboard";
+    const target = targetSlug && targetSlug !== "dashboard" ? `/owner/dashboard` : "/dashboard";
     window.location.assign(target);
   };
 
@@ -160,7 +160,7 @@ export default function OnboardingCompletePage() {
           <p className="text-xs text-graphite dark:text-slate-400">
             Having trouble?{" "}
             <a
-              href={workspaceSlug ? `/w/${workspaceSlug}/dashboard` : "/dashboard"}
+              href={workspaceSlug ? `/owner/dashboard` : "/dashboard"}
               className="text-cobalt hover:underline font-medium"
             >
               Click here to open dashboard directly

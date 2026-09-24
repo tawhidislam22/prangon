@@ -13,12 +13,16 @@ import { Eye, EyeOff, Building2, Users } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-const RegisterForm = () => {
+interface RegisterFormProps {
+    redirectPath?: string;
+}
+
+const RegisterForm = ({ redirectPath }: RegisterFormProps) => {
     const [serverError, setServerError] = useState<string | null>(null);
     const [showPassword, setShowPassword] = useState(false);
 
     const { mutateAsync , isPending} = useMutation({
-        mutationFn : (payload : IRegisterPayload) => registerAction(payload),
+        mutationFn : (payload : IRegisterPayload) => registerAction(payload, redirectPath),
     })
 
     const form = useForm({
@@ -185,7 +189,7 @@ const RegisterForm = () => {
         <p className="text-sm text-muted-foreground">
               Already have an account?{" "}
             <Link
-                href="/login"
+                href={`/login${redirectPath ? `?redirect=${encodeURIComponent(redirectPath)}` : ''}`}
                 className="text-primary font-medium hover:underline underline-offset-4"
             >
                 Log In

@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { NavSection } from "@/types/dashboard.types";
 import { UserInfo } from "@/types/user.types";
 import { Menu, Search } from "lucide-react";
@@ -47,6 +47,8 @@ const DashboardNavbarContent = ({dashboardHome, navItems, userInfo} : DashboardN
           </SheetTrigger>
 
           <SheetContent side="left" className="w-64 p-0">
+              <SheetTitle className="sr-only">Dashboard Navigation</SheetTitle>
+              <SheetDescription className="sr-only">Dashboard mobile navigation sidebar</SheetDescription>
               <DashboardMobileSidebar userInfo={userInfo} dashboardHome={dashboardHome} navItems={navItems} />
           </SheetContent>
       </Sheet>

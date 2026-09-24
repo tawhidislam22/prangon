@@ -15,9 +15,9 @@ const pageContent = {
 } as const;
 
 function resourceHref(resource: Resource, workspace: IWorkspace) {
-  if (resource === "team") return `/w/${workspace.slug}/members`;
-  if (resource === "projects" || resource === "tasks") return `/w/${workspace.slug}/projects`;
-  return `/w/${workspace.slug}/dashboard`;
+  if (resource === "team") return `/owner/members`;
+  if (resource === "projects" || resource === "tasks") return `/owner/projects`;
+  return `/owner/dashboard`;
 }
 
 export async function WorkspaceResourceOverview({ resource }: { resource: Resource }) {

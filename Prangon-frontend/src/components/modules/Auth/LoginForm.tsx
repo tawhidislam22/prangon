@@ -154,9 +154,9 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
         </div>
 
         <Button variant="outline" className="w-full" onClick={() => {
-            const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-            //TODO redirect path after login in frontend
-            window.location.href = `${baseUrl}/auth/login/google`;
+            const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000/api/v1";
+            const targetRedirect = redirectPath ? `?redirect=${encodeURIComponent(redirectPath)}` : "";
+            window.location.href = `${baseUrl}/auth/login/google${targetRedirect}`;
         }}>
           <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
             <path
@@ -184,7 +184,7 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
         <p className="text-sm text-muted-foreground">
               Don&apos;t have an account?{" "}
             <Link
-                href="/register"
+                href={`/register${redirectPath ? `?redirect=${encodeURIComponent(redirectPath)}` : ''}`}
                 className="text-primary font-medium hover:underline underline-offset-4"
             >
                 Sign Up for an account

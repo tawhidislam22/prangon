@@ -56,7 +56,7 @@ const createInvitation = async (email: string, role: WorkspaceRole = WorkspaceRo
     });
 
     const frontendUrl = envVars.FRONTEND_URL || "http://localhost:3000";
-    const acceptUrl = `${frontendUrl}/register?invitation=${token}&workspace=${result.workspace?.slug || workspaceIdOrSlug}`;
+    const acceptUrl = `${frontendUrl}/accept-invitation?token=${token}&workspace=${result.workspace?.slug || workspaceIdOrSlug}`;
 
     sendEmail({
         to: email,
@@ -156,7 +156,7 @@ const resendInvitation = async (id: string) => {
     });
 
     const frontendUrl = envVars.FRONTEND_URL || "http://localhost:3000";
-    const acceptUrl = `${frontendUrl}/register?invitation=${result.token}&workspace=${result.workspace?.slug}`;
+    const acceptUrl = `${frontendUrl}/accept-invitation?token=${result.token}&workspace=${result.workspace?.slug}`;
 
     sendEmail({
         to: result.email,

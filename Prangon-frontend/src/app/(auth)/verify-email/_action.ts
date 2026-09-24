@@ -37,7 +37,7 @@ export const verifyEmailAction = async (
             if (token) await setTokenInCookies("better-auth.session_token", token, 24 * 60 * 60);
 
             const role = user?.role as UserRole;
-            const fallbackPath = role === "OWNER" ? "/onboarding/company" : getDefaultDashboardRoute(role || "USER");
+            const fallbackPath = role === "OWNER" ? "/onboarding/company" : getDefaultDashboardRoute(role || "MEMBER");
             const targetPath = redirectPath && isValidRedirectForRole(redirectPath, role)
                 ? redirectPath
                 : fallbackPath;

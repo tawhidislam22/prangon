@@ -1,6 +1,7 @@
 "use client"
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createWorkspaceAction } from "@/app/(dashboardLayout)/workspaces/create/_action";
+import { setActiveWorkspaceAction } from "@/app/owner/workspaceActions";
 import AppField from "@/components/shared/form/AppField";
 import AppSubmitButton from "@/components/shared/form/AppSubmitButton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -35,7 +36,8 @@ const CreateWorkspaceForm = () => {
                     return ;
                 }
                 
-                router.push(`/w/${value.slug}/dashboard`);
+                await setActiveWorkspaceAction(value.slug);
+                router.push(`/owner/dashboard`);
             } catch (error : any) {
                 console.log(`Failed to create workspace: ${error.message}`);
                 setServerError(`Failed to create workspace: ${error.message}`);

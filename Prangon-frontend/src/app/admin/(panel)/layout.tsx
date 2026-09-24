@@ -40,6 +40,7 @@ export default async function PlatformAdminProtectedLayout({
       userEmail={userInfo.email}
       userName={userInfo.name}
       userRole={userInfo.role}
+      userImage={userInfo.image || undefined}
     >
       {children}
     </AdminLayoutClient>

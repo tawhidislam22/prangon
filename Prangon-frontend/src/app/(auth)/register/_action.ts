@@ -7,7 +7,7 @@ import { ApiErrorResponse } from "@/types/api.types";
 import { IRegisterPayload, registerZodSchema } from "@/zod/auth.validation";
 import { redirect } from "next/navigation";
 
-export const registerAction = async (payload : IRegisterPayload) : Promise<{success: boolean, message: string} | ApiErrorResponse> =>{
+export const registerAction = async (payload : IRegisterPayload, redirectPath?: string) : Promise<{success: boolean, message: string} | ApiErrorResponse> =>{
     const parsedPayload = registerZodSchema.safeParse(payload);
 
     if(!parsedPayload.success){
@@ -27,7 +27,9 @@ export const registerAction = async (payload : IRegisterPayload) : Promise<{succ
             if (token) await setTokenInCookies("better-auth.session_token", token, 24 * 60 * 60);
         }
 
-        if (parsedPayload.data.role === "OWNER") {
+        if (redirectPath) {
+            redirect(redirectPath);
+        } else if (parsedPayload.data.role === "OWNER") {
             redirect("/onboarding/company");
         } else {
             redirect("/dashboard");

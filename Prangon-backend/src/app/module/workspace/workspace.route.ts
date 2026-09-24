@@ -11,34 +11,34 @@ const router = express.Router();
 
 router.post(
   "/",
-  checkAuth(Role.SUPER_ADMIN, Role.USER),
+  checkAuth(),
   validateRequest(WorkspaceValidation.createWorkspaceSchema),
   WorkspaceController.createWorkspace
 );
 
 router.get(
   "/",
-  checkAuth(Role.SUPER_ADMIN, Role.USER),
+  checkAuth(),
   WorkspaceController.getWorkspacesForUser
 );
 
 // Onboarding Endpoints (exempt from requireCompletedOnboarding)
 router.patch(
   "/:slug/onboarding",
-  checkAuth(Role.SUPER_ADMIN, Role.USER),
+  checkAuth(),
   WorkspaceController.updateOnboardingStatus
 );
 
 router.get(
   "/:slug/onboarding-status",
-  checkAuth(Role.SUPER_ADMIN, Role.USER),
+  checkAuth(),
   WorkspaceController.getOnboardingStatus
 );
 
 // Dashboard aggregate endpoint (avoid 4 separate round-trips)
 router.get(
   "/:slug/dashboard-summary",
-  checkAuth(Role.SUPER_ADMIN, Role.USER),
+  checkAuth(),
   requireCompletedOnboarding,
   requireRole(WorkspaceRole.OWNER, WorkspaceRole.ADMIN, WorkspaceRole.MEMBER),
   WorkspaceController.getDashboardSummary
@@ -47,7 +47,7 @@ router.get(
 // Transfer Ownership (Owner only)
 router.post(
   "/:slug/transfer-ownership",
-  checkAuth(Role.SUPER_ADMIN, Role.USER),
+  checkAuth(),
   requireCompletedOnboarding,
   requireRole(WorkspaceRole.OWNER),
   WorkspaceController.transferOwnership
@@ -56,14 +56,14 @@ router.post(
 // Dashboard/Workspace routes
 router.get(
   "/:workspaceId",
-  checkAuth(Role.SUPER_ADMIN, Role.USER),
+  checkAuth(),
   requireCompletedOnboarding,
   WorkspaceController.getWorkspaceById
 );
 
 router.patch(
   "/:workspaceId",
-  checkAuth(Role.SUPER_ADMIN, Role.USER),
+  checkAuth(),
   requireRole(WorkspaceRole.OWNER),
   validateRequest(WorkspaceValidation.updateWorkspaceSchema),
   WorkspaceController.updateWorkspace
@@ -71,7 +71,7 @@ router.patch(
 
 router.delete(
   "/:workspaceId",
-  checkAuth(Role.SUPER_ADMIN, Role.USER),
+  checkAuth(),
   requireCompletedOnboarding,
   requireRole(WorkspaceRole.OWNER),
   WorkspaceController.deleteWorkspace

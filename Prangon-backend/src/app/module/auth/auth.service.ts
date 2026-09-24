@@ -16,9 +16,11 @@ const registerUser = async(payload: IRegisterUserPayload) => {
     const { name, email, password, role } = payload;
     const normalizedEmail = email.trim().toLowerCase();
 
-    let assignedRole: Role = Role.USER;
+    let assignedRole: Role = Role.MEMBER;
     if (role === "OWNER") {
         assignedRole = Role.OWNER;
+    } else if (role === "ADMIN") {
+        assignedRole = Role.ADMIN;
     } else if (role === "MEMBER") {
         assignedRole = Role.MEMBER;
     }

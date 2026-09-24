@@ -2,12 +2,32 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { PrangonLogo } from "@/components/PrangonLogo";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { ShieldCheck, Check, Trash2, Clock, User, Mail, Calendar, FileText, ArrowLeft, RefreshCw } from "lucide-react";
-import { getAdminRequestsAction, acceptAdminRequestAction, deleteAdminRequestAction } from "./_action";
+import {
+  ShieldCheck,
+  Check,
+  Trash2,
+  Clock,
+  User,
+  Mail,
+  Calendar,
+  FileText,
+  RefreshCw,
+  Search,
+  Filter,
+  CheckCircle2,
+  XCircle,
+  AlertCircle,
+} from "lucide-react";
+import {
+  getAdminRequestsAction,
+  acceptAdminRequestAction,
+  deleteAdminRequestAction,
+} from "./_action";
 
 interface AdminRequestItem {
   id: string;
@@ -23,13 +43,15 @@ export default function AdminRequestsPage() {
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [notification, setNotification] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState<"ALL" | "PENDING" | "APPROVED" | "REJECTED">("ALL");
 
   const fetchRequests = async () => {
     setLoading(true);
     setNotification(null);
     try {
       const res = await getAdminRequestsAction();
-      if (res.success) {
+      if (res.success && Array.isArray(res.data)) {
         setRequests(res.data);
       } else {
         setNotification({ type: "error", text: res.message || "Failed to load requests." });
@@ -85,141 +107,220 @@ export default function AdminRequestsPage() {
   };
 
   const pendingCount = requests.filter((r) => r.status === "PENDING").length;
+  const approvedCount = requests.filter((r) => r.status === "APPROVED").length;
+
+  const filteredRequests = requests.filter((req) => {
+    const matchesSearch =
+      req.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      req.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (req.reason && req.reason.toLowerCase().includes(searchQuery.toLowerCase()));
+
+    const matchesStatus = statusFilter === "ALL" || req.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
 
   return (
-    <div className="min-h-screen bg-paper text-ink p-6 md:p-10">
-      <div className="max-w-5xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-line">
-          <div className="flex items-center gap-3">
-            <Link href="/" className="hover:opacity-80 transition">
-              <PrangonLogo size={32} />
-            </Link>
-            <div className="h-6 w-px bg-line" />
-            <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-2xl font-bold font-display text-ink">Admin Account Requests</h1>
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-cobalt/10 text-cobalt border border-cobalt/20">
-                  {pendingCount} Pending
-                </span>
-              </div>
-              <p className="text-graphite text-xs mt-0.5">
-                Review and approve or reject requests for system administrator privileges.
-              </p>
-            </div>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border">
+        <div>
+          <div className="flex items-center gap-2 mb-1.5">
+            <h1 className="text-2xl sm:text-3xl font-bold font-display text-foreground tracking-tight">
+              Admin Privilege Requests
+            </h1>
+            {pendingCount > 0 && (
+              <Badge className="bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20 text-xs">
+                {pendingCount} Pending
+              </Badge>
+            )}
           </div>
-
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" onClick={fetchRequests} disabled={loading} className="gap-1.5 text-xs">
-              <RefreshCw className="size-3.5" />
-              Refresh
-            </Button>
-            <Link href="/dashboard">
-              <Button variant="ghost" size="sm" className="gap-1.5 text-xs">
-                <ArrowLeft className="size-3.5" />
-                Dashboard
-              </Button>
-            </Link>
-          </div>
+          <p className="text-xs sm:text-sm text-muted-foreground">
+            Review and grant or revoke platform administrator privileges for staff members.
+          </p>
         </div>
 
-        {notification && (
-          <Alert variant={notification.type === "error" ? "destructive" : "default"} className={notification.type === "success" ? "border-green-500 bg-green-500/10 text-green-900 dark:text-green-200" : ""}>
-            <AlertDescription>{notification.text}</AlertDescription>
-          </Alert>
-        )}
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={fetchRequests}
+            disabled={loading}
+            className="gap-1.5 text-xs bg-card hover:bg-accent"
+          >
+            <RefreshCw className={`size-3.5 ${loading ? "animate-spin" : ""}`} />
+            Refresh
+          </Button>
+        </div>
+      </div>
 
-        {/* List of requests */}
-        {loading ? (
-          <div className="text-center py-20">
-            <RefreshCw className="size-8 animate-spin mx-auto text-cobalt mb-3" />
-            <p className="text-graphite text-sm">Loading admin requests...</p>
-          </div>
-        ) : requests.length === 0 ? (
-          <Card className="text-center py-16 border-line bg-white shadow-sm">
-            <CardContent className="space-y-3">
-              <div className="w-12 h-12 rounded-full bg-ink/5 flex items-center justify-center mx-auto text-graphite">
-                <ShieldCheck className="size-6" />
-              </div>
-              <h3 className="text-lg font-semibold text-ink">No requests pending</h3>
-              <p className="text-sm text-graphite max-w-sm mx-auto">
-                There are currently no new administrator account requests to review.
-              </p>
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="grid gap-4">
-            {requests.map((item) => (
-              <Card key={item.id} className="border-line bg-white shadow-sm hover:shadow-md transition-shadow">
-                <CardContent className="p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                  <div className="space-y-2 flex-1">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-semibold text-base text-ink flex items-center gap-1.5">
-                        <User className="size-4 text-graphite" />
-                        {item.name}
-                      </span>
-                      <span
-                        className={`text-xs px-2 py-0.5 rounded-md font-medium ${
-                          item.status === "APPROVED"
-                            ? "bg-emerald-100 text-emerald-700"
-                            : item.status === "REJECTED"
-                            ? "bg-rose-100 text-rose-700"
-                            : "bg-amber-100 text-amber-700"
-                        }`}
-                      >
-                        {item.status}
-                      </span>
+      {notification && (
+        <Alert
+          variant={notification.type === "error" ? "destructive" : "default"}
+          className={
+            notification.type === "success"
+              ? "border-emerald-500 bg-emerald-500/10 text-emerald-900 dark:text-emerald-200"
+              : ""
+          }
+        >
+          <AlertDescription>{notification.text}</AlertDescription>
+        </Alert>
+      )}
+
+      {/* Filter and Search Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        {/* Status Tabs */}
+        <div className="flex items-center gap-1.5 p-1 bg-muted/60 rounded-lg border border-border w-fit">
+          {(["ALL", "PENDING", "APPROVED", "REJECTED"] as const).map((tab) => {
+            const count =
+              tab === "ALL"
+                ? requests.length
+                : tab === "PENDING"
+                ? pendingCount
+                : tab === "APPROVED"
+                ? approvedCount
+                : requests.filter((r) => r.status === "REJECTED").length;
+
+            return (
+              <button
+                key={tab}
+                type="button"
+                onClick={() => setStatusFilter(tab)}
+                className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
+                  statusFilter === tab
+                    ? "bg-card text-foreground shadow-xs"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {tab.charAt(0) + tab.slice(1).toLowerCase()} ({count})
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Search Input */}
+        <div className="relative w-full sm:w-64">
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
+          <Input
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search by name or email..."
+            className="pl-8 h-9 text-xs bg-card border-border"
+          />
+        </div>
+      </div>
+
+      {/* Request List */}
+      {loading ? (
+        <div className="text-center py-20">
+          <RefreshCw className="size-8 animate-spin mx-auto text-primary mb-3" />
+          <p className="text-muted-foreground text-xs">Loading admin requests...</p>
+        </div>
+      ) : filteredRequests.length === 0 ? (
+        <Card className="text-center py-16 border-border bg-card shadow-xs">
+          <CardContent className="space-y-3">
+            <ShieldCheck className="size-10 text-muted-foreground/40 mx-auto" />
+            <h3 className="text-sm font-semibold text-foreground">No requests found</h3>
+            <p className="text-xs text-muted-foreground max-w-sm mx-auto">
+              {searchQuery || statusFilter !== "ALL"
+                ? "No requests match your current search or filter criteria."
+                : "No admin account requests currently awaiting review."}
+            </p>
+          </CardContent>
+        </Card>
+      ) : (
+        <div className="grid grid-cols-1 gap-4">
+          {filteredRequests.map((req) => (
+            <Card
+              key={req.id}
+              className={`border-border bg-card transition-all hover:shadow-xs ${
+                req.status === "PENDING" ? "border-l-4 border-l-amber-500" : ""
+              }`}
+            >
+              <CardContent className="p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="space-y-2 min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <div className="size-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs shrink-0">
+                      {req.name.charAt(0).toUpperCase()}
                     </div>
-
-                    <div className="flex flex-wrap items-center gap-4 text-xs text-graphite">
-                      <span className="flex items-center gap-1">
-                        <Mail className="size-3.5" />
-                        {item.email}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Calendar className="size-3.5" />
-                        {new Date(item.createdAt).toLocaleDateString()} at{" "}
-                        {new Date(item.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                      </span>
-                    </div>
-
-                    {item.reason && (
-                      <div className="text-xs text-graphite bg-ink/5 p-2.5 rounded-md border border-line/60 flex items-start gap-1.5 mt-1">
-                        <FileText className="size-3.5 shrink-0 mt-0.5 text-cobalt" />
-                        <span>{item.reason}</span>
-                      </div>
-                    )}
+                    <span className="font-semibold text-sm text-foreground">{req.name}</span>
+                    <Badge
+                      variant="outline"
+                      className={`text-[10px] font-semibold ${
+                        req.status === "APPROVED"
+                          ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20"
+                          : req.status === "PENDING"
+                          ? "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20"
+                          : "bg-destructive/10 text-destructive border-destructive/20"
+                      }`}
+                    >
+                      {req.status}
+                    </Badge>
                   </div>
 
-                  <div className="flex items-center gap-2 shrink-0 pt-2 md:pt-0 border-t md:border-t-0 border-line">
-                    {item.status === "PENDING" && (
+                  <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
+                    <span className="flex items-center gap-1.5">
+                      <Mail className="size-3.5 text-muted-foreground" />
+                      {req.email}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <Calendar className="size-3.5 text-muted-foreground" />
+                      {new Date(req.createdAt).toLocaleDateString(undefined, {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </span>
+                  </div>
+
+                  {req.reason && (
+                    <div className="p-3 bg-muted/40 rounded-lg border border-border/60 text-xs text-muted-foreground">
+                      <span className="font-semibold text-foreground mr-1.5">Reason:</span>
+                      {req.reason}
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0 pt-2 md:pt-0">
+                  {req.status === "PENDING" ? (
+                    <>
                       <Button
                         size="sm"
-                        onClick={() => handleAccept(item.id)}
-                        disabled={actionLoading === item.id}
-                        className="bg-green-600 hover:bg-green-700 text-white gap-1 text-xs"
+                        onClick={() => handleAccept(req.id)}
+                        disabled={actionLoading === req.id}
+                        className="gap-1.5 text-xs bg-emerald-600 hover:bg-emerald-500 text-white font-semibold"
                       >
                         <Check className="size-3.5" />
-                        Accept
+                        {actionLoading === req.id ? "Accepting..." : "Approve & Grant"}
                       </Button>
-                    )}
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleDelete(req.id)}
+                        disabled={actionLoading === req.id}
+                        className="gap-1.5 text-xs text-destructive hover:bg-destructive/10 border-border"
+                      >
+                        <Trash2 className="size-3.5" />
+                        Reject
+                      </Button>
+                    </>
+                  ) : (
                     <Button
-                      variant="outline"
+                      variant="ghost"
                       size="sm"
-                      onClick={() => handleDelete(item.id)}
-                      disabled={actionLoading === item.id}
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200 gap-1 text-xs"
+                      onClick={() => handleDelete(req.id)}
+                      disabled={actionLoading === req.id}
+                      className="gap-1.5 text-xs text-muted-foreground hover:text-destructive"
                     >
                       <Trash2 className="size-3.5" />
                       Delete
                     </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        )}
-      </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

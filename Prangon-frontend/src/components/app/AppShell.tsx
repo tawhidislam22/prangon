@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Sidebar } from "./Sidebar";
 import { Topbar } from "./Topbar";
 import { AppWorkspaceRole } from "./RoleGate";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -37,6 +37,8 @@ export function AppShell({
       {/* Mobile Drawer */}
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
         <SheetContent side="left" className="p-0 w-64">
+          <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+          <SheetDescription className="sr-only">Workspace navigation sidebar</SheetDescription>
           <Sidebar
             workspaceSlug={workspaceSlug}
             role={role}
@@ -50,6 +52,7 @@ export function AppShell({
         <Topbar
           workspaceSlug={workspaceSlug}
           workspaceName={workspaceName}
+          role={role}
           userEmail={userEmail}
           userName={userName}
           workspaces={workspaces}

@@ -24,9 +24,7 @@ export const checkAuth = (...authRoles: Role[]) => async (req: Request, res: Res
         }
 
         const userRole = verifiedToken.data.role as Role;
-        const isAllowed = authRoles.length === 0 || 
-            authRoles.includes(userRole) || 
-            (authRoles.includes(Role.USER) && (userRole === Role.OWNER || userRole === Role.MEMBER));
+        const isAllowed = authRoles.length === 0 || authRoles.includes(userRole);
 
         if (!isAllowed) {
             throw new AppError(status.FORBIDDEN, 'Forbidden access! You do not have permission to access this resource.');

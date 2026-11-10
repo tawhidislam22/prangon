@@ -24,24 +24,24 @@ export function StatCard({
   className,
 }: StatCardProps) {
   return (
-    <Card className={cn("border border-line bg-white shadow-xs hover:shadow-sm transition-shadow", className)}>
-      <CardContent className="p-5">
+    <Card className={cn("border border-border bg-card text-card-foreground shadow-2xs hover:shadow-xs transition-all duration-150 group", className)}>
+      <CardContent className="p-4 sm:p-5">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-medium text-graphite uppercase tracking-wider">{title}</span>
-          <div className="p-2 rounded-lg bg-ink/5 text-graphite">
+          <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">{title}</span>
+          <div className="p-2 rounded-md bg-muted/60 text-muted-foreground group-hover:text-primary group-hover:bg-primary/10 transition-colors">
             <Icon className="size-4" />
           </div>
         </div>
 
-        <div className="mt-3 flex items-baseline gap-2">
-          <span className="text-2xl font-bold font-display text-ink tracking-tight">{value}</span>
+        <div className="mt-2.5 flex items-baseline gap-2">
+          <span className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight font-sans tabular-nums">{value}</span>
           {change && (
             <span
               className={cn(
-                "inline-flex items-center text-xs font-semibold px-1.5 py-0.5 rounded",
-                change.trend === "up" && "text-emerald-700 bg-emerald-50 dark:bg-emerald-950/40 dark:text-emerald-300",
-                change.trend === "down" && "text-rose-700 bg-rose-50 dark:bg-rose-950/40 dark:text-rose-300",
-                change.trend === "neutral" && "text-slate-600 bg-slate-100 dark:bg-slate-800"
+                "inline-flex items-center text-[11px] font-semibold px-1.5 py-0.5 rounded-full border",
+                change.trend === "up" && "text-emerald-700 bg-emerald-50 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800/40",
+                change.trend === "down" && "text-rose-700 bg-rose-50 border-rose-200 dark:bg-rose-950/40 dark:text-rose-300 dark:border-rose-800/40",
+                change.trend === "neutral" && "text-slate-600 bg-slate-100 border-slate-200 dark:bg-zinc-800 dark:text-zinc-300 dark:border-zinc-700"
               )}
             >
               {change.trend === "up" && <ArrowUpRight className="size-3 mr-0.5" />}
@@ -52,7 +52,7 @@ export function StatCard({
         </div>
 
         {description && (
-          <p className="mt-1 text-xs text-graphite/80">{description}</p>
+          <p className="mt-1 text-xs text-muted-foreground leading-tight">{description}</p>
         )}
       </CardContent>
     </Card>

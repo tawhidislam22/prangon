@@ -70,9 +70,9 @@ export function ProjectsClientView({
         return (
           <Link
             href={`/owner/projects/${project.id}`}
-            className="font-semibold text-foreground hover:text-cobalt flex items-center gap-2"
+            className="font-semibold text-foreground hover:text-primary flex items-center gap-2"
           >
-            <FolderKanban className="size-4 text-cobalt shrink-0" />
+            <FolderKanban className="size-4 text-primary shrink-0" />
             <span>{project.name}</span>
           </Link>
         );
@@ -121,7 +121,7 @@ export function ProjectsClientView({
         <div className="text-right">
           <Link
             href={`/owner/projects/${row.original.id}`}
-            className="text-xs font-semibold text-cobalt hover:underline inline-flex items-center gap-1"
+            className="text-xs font-semibold text-primary hover:underline inline-flex items-center gap-1"
           >
             Open Board
             <ArrowRight className="size-3" />
@@ -242,23 +242,23 @@ export function ProjectsClientView({
                 href={`/owner/projects/${project.id}`}
                 className="group block"
               >
-                <Card className="h-full border border-border bg-card hover:border-cobalt/40 hover:shadow-sm transition-all flex flex-col justify-between">
+                <Card className="h-full border border-border bg-card hover:border-primary/40 hover:shadow-xs transition-all duration-150 flex flex-col justify-between group/card">
                   <CardContent className="p-5 space-y-4">
                     <div className="flex items-start justify-between gap-3">
-                      <div className="size-9 rounded-lg bg-cobalt/10 text-cobalt flex items-center justify-center font-bold text-sm shrink-0 group-hover:bg-cobalt group-hover:text-white transition-colors">
+                      <div className="size-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-bold text-sm shrink-0 group-hover/card:bg-primary group-hover/card:text-white transition-colors ring-1 ring-primary/20">
                         <FolderKanban className="size-4" />
                       </div>
-                      <span className="text-[11px] font-medium text-muted-foreground flex items-center gap-1">
+                      <span className="text-[11px] font-medium text-muted-foreground flex items-center gap-1 font-mono">
                         <Calendar className="size-3" />
                         {new Date(project.createdAt).toLocaleDateString()}
                       </span>
                     </div>
 
                     <div>
-                      <h3 className="text-base font-bold font-display text-foreground group-hover:text-cobalt transition-colors line-clamp-1">
+                      <h3 className="text-base font-bold text-foreground group-hover/card:text-primary transition-colors line-clamp-1">
                         {project.name}
                       </h3>
-                      <p className="text-xs text-muted-foreground line-clamp-2 mt-1 min-h-[32px]">
+                      <p className="text-xs text-muted-foreground line-clamp-2 mt-1 min-h-[32px] leading-relaxed">
                         {project.description || "No description provided for this project."}
                       </p>
                     </div>
@@ -268,22 +268,22 @@ export function ProjectsClientView({
                       <div className="flex items-center justify-between text-xs text-muted-foreground">
                         <span className="flex items-center gap-1 font-medium">
                           <CheckCircle2 className="size-3.5 text-emerald-500" />
-                          {completed}/{projectTasks.length} tasks
+                          <span className="tabular-nums">{completed}/{projectTasks.length}</span> tasks
                         </span>
-                        <span className="font-semibold text-foreground">{progress}%</span>
+                        <span className="font-semibold text-foreground tabular-nums">{progress}%</span>
                       </div>
                       <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-cobalt rounded-full transition-all duration-300"
+                          className="h-full bg-primary rounded-full transition-all duration-300"
                           style={{ width: `${progress}%` }}
                         />
                       </div>
                     </div>
                   </CardContent>
 
-                  <div className="px-5 py-3 bg-muted/20 border-t border-border/60 flex items-center justify-between text-xs text-muted-foreground group-hover:text-cobalt transition-colors">
+                  <div className="px-5 py-3 bg-muted/20 border-t border-border/60 flex items-center justify-between text-xs text-muted-foreground group-hover/card:text-primary transition-colors">
                     <span className="font-medium">Open board</span>
-                    <ArrowRight className="size-3.5 transform group-hover:translate-x-0.5 transition-transform" />
+                    <ArrowRight className="size-3.5 transform group-hover/card:translate-x-0.5 transition-transform" />
                   </div>
                 </Card>
               </Link>

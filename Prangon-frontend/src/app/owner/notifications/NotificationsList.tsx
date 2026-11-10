@@ -63,7 +63,7 @@ export function NotificationsList({
             className={cn(
               "px-3 py-1.5 text-xs font-semibold rounded-md transition-colors flex items-center gap-1.5",
               filter === "all"
-                ? "bg-cobalt text-white shadow-xs"
+                ? "bg-primary text-primary-foreground shadow-2xs"
                 : "text-muted-foreground hover:text-foreground hover:bg-muted"
             )}
           >
@@ -85,7 +85,7 @@ export function NotificationsList({
             className={cn(
               "px-3 py-1.5 text-xs font-semibold rounded-md transition-colors flex items-center gap-1.5",
               filter === "unread"
-                ? "bg-cobalt text-white shadow-xs"
+                ? "bg-primary text-primary-foreground shadow-2xs"
                 : "text-muted-foreground hover:text-foreground hover:bg-muted"
             )}
           >
@@ -104,9 +104,9 @@ export function NotificationsList({
             size="sm"
             onClick={handleMarkAllAsRead}
             disabled={isPending}
-            className="text-xs h-8 gap-1.5 border-line hover:border-cobalt/40"
+            className="text-xs h-8 gap-1.5 border-border hover:border-primary/40"
           >
-            <CheckCheck className="size-3.5 text-cobalt" />
+            <CheckCheck className="size-3.5 text-primary" />
             <span>Mark all read</span>
           </Button>
         )}
@@ -128,10 +128,10 @@ export function NotificationsList({
             <Card
               key={notification.id}
               className={cn(
-                "border transition-all shadow-xs",
+                "border transition-all shadow-2xs",
                 notification.isRead
                   ? "bg-card/50 border-border/60 opacity-80"
-                  : "bg-card border-cobalt/30 ring-1 ring-cobalt/10"
+                  : "bg-card border-primary/30 ring-1 ring-primary/10"
               )}
             >
               <CardContent className="p-4 flex items-start gap-3.5">

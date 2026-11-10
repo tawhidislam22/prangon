@@ -118,7 +118,7 @@ export function GeneralSettingsForm({
                 Workspace URL Slug
               </Label>
               <div className="flex items-center max-w-lg">
-                <span className="inline-flex items-center px-3 h-9 text-xs text-muted-foreground bg-muted border border-r-0 border-line rounded-l-md font-mono select-none">
+                <span className="inline-flex items-center px-3 h-9 text-xs text-muted-foreground bg-muted border border-r-0 border-border rounded-l-md font-mono select-none">
                   prangon.app/w/
                 </span>
                 <Input
@@ -128,7 +128,7 @@ export function GeneralSettingsForm({
                     setSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ""))
                   }
                   required
-                  className="h-9 text-xs font-mono border-line bg-card rounded-l-none"
+                  className="h-9 text-xs font-mono border-border bg-card rounded-l-none"
                 />
               </div>
 
@@ -148,7 +148,7 @@ export function GeneralSettingsForm({
                 Default Timezone
               </Label>
               <Select value={timezone} onValueChange={setTimezone}>
-                <SelectTrigger id="timezone" className="h-9 text-xs border-line bg-card">
+                <SelectTrigger id="timezone" className="h-9 text-xs border-border bg-card">
                   <SelectValue placeholder="Select timezone" />
                 </SelectTrigger>
                 <SelectContent>
@@ -166,7 +166,7 @@ export function GeneralSettingsForm({
             <Button
               type="submit"
               disabled={isLoading}
-              className="text-xs font-semibold gap-1.5 bg-cobalt hover:bg-cobalt/90 text-white shadow-xs"
+              className="text-xs font-semibold gap-1.5 bg-primary hover:bg-primary/90 text-primary-foreground shadow-xs"
             >
               {isLoading ? (
                 <Loader2 className="size-3.5 animate-spin" />

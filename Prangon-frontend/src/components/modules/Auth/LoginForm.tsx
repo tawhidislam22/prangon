@@ -49,9 +49,9 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
         }
     })
   return (
-    <Card className="w-full max-w-md mx-auto shadow-2xl rounded-2xl border border-line relative z-20">
+    <Card className="w-full max-w-md mx-auto shadow-xl rounded-2xl border border-border bg-card relative z-20">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-bold">Welcome Back!</CardTitle>
+        <CardTitle className="text-2xl font-bold text-foreground">Welcome Back!</CardTitle>
         <CardDescription>
           Please enter your credentials to log in.
         </CardDescription>
@@ -147,7 +147,7 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
             <div className="w-full border-t border-line"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-paper text-graphite">
+            <span className="px-2 bg-card text-muted-foreground text-xs">
               Or continue with
             </span>
           </div>

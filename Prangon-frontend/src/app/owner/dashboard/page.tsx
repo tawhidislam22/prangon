@@ -141,8 +141,8 @@ export default async function WorkspaceDashboardPage({
       description: "Grow your team",
       href: `/owner/members/invitations`,
       icon: UserPlus,
-      color: "text-cobalt",
-      bg: "bg-cobalt/10",
+      color: "text-primary",
+      bg: "bg-primary/10",
       visible: isOwner,
     },
     {
@@ -175,8 +175,8 @@ export default async function WorkspaceDashboardPage({
         description={`Workspace management overview for ${workspaceName}. Monitor projects, team activity, and task progress.`}
         badge={
           <Badge
-            variant="outline"
-            className="bg-cobalt/10 text-cobalt border-cobalt/20 font-semibold text-[11px]"
+            variant="indigo"
+            className="font-semibold text-[11px] px-2.5 py-0.5"
           >
             {workspaceName} • {workspaceRole}
           </Badge>

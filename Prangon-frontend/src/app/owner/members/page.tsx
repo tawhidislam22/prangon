@@ -61,19 +61,19 @@ export default async function WorkspaceMembersPage({
     switch (role) {
       case "OWNER":
         return (
-          <Badge className="bg-cobalt/15 text-cobalt border border-cobalt/30 hover:bg-cobalt/20 text-xs font-semibold px-2 py-0.5">
+          <Badge variant="indigo" className="text-xs font-semibold px-2 py-0.5">
             Owner
           </Badge>
         );
       case "ADMIN":
         return (
-          <Badge className="bg-indigo-50 text-indigo-700 border border-indigo-200 hover:bg-indigo-100 text-xs font-semibold px-2 py-0.5">
+          <Badge variant="info" className="text-xs font-semibold px-2 py-0.5">
             Admin
           </Badge>
         );
       default:
         return (
-          <Badge variant="outline" className="text-slate-600 border-line bg-muted/30 text-xs font-normal px-2 py-0.5">
+          <Badge variant="neutral" className="text-xs font-medium px-2 py-0.5">
             Member
           </Badge>
         );
@@ -90,7 +90,7 @@ export default async function WorkspaceMembersPage({
           { label: "Members" },
         ]}
         badge={
-          <Badge variant="outline" className="bg-cobalt/10 text-cobalt border-cobalt/20 font-semibold text-[11px]">
+          <Badge variant="indigo" className="font-semibold text-[11px] px-2.5 py-0.5">
             {members.length} Total
           </Badge>
         }
@@ -98,17 +98,17 @@ export default async function WorkspaceMembersPage({
       />
 
       {/* Nav Tabs: Members vs Invitations */}
-      <div className="flex items-center gap-4 border-b border-line pb-2">
+      <div className="flex items-center gap-4 border-b border-border pb-2">
         <Link
           href={`/owner/members`}
-          className="text-xs font-semibold text-cobalt border-b-2 border-cobalt pb-2.5 -mb-2.5 flex items-center gap-1.5"
+          className="text-xs font-semibold text-primary border-b-2 border-primary pb-2.5 -mb-2.5 flex items-center gap-1.5"
         >
           <Users className="size-3.5" />
           <span>Active Members ({members.length})</span>
         </Link>
         <Link
           href={`/owner/members/invitations`}
-          className="text-xs font-medium text-graphite hover:text-ink pb-2.5 -mb-2.5 flex items-center gap-1.5 transition-colors"
+          className="text-xs font-medium text-muted-foreground hover:text-foreground pb-2.5 -mb-2.5 flex items-center gap-1.5 transition-colors"
         >
           <Mail className="size-3.5" />
           <span>Pending Invitations</span>
@@ -116,12 +116,12 @@ export default async function WorkspaceMembersPage({
       </div>
 
       {/* Members Table */}
-      <Card className="border border-line bg-white shadow-xs overflow-hidden">
+      <Card className="border border-border bg-card shadow-2xs overflow-hidden">
         <CardContent className="p-0">
           {members.length > 0 ? (
             <Table>
               <TableHeader>
-                <TableRow className="bg-muted/40 hover:bg-muted/40 text-xs font-semibold">
+                <TableRow className="bg-muted/40 hover:bg-muted/40 text-xs font-semibold border-b border-border/70">
                   <TableHead className="w-[300px]">Member</TableHead>
                   <TableHead>Role</TableHead>
                   <TableHead>Joined</TableHead>
@@ -137,27 +137,27 @@ export default async function WorkspaceMembersPage({
                     member.userId === currentUser?.id || email === currentUser?.email;
 
                   return (
-                    <TableRow key={member.id} className="hover:bg-muted/20 transition-colors">
+                    <TableRow key={member.id} className="hover:bg-muted/30 transition-colors">
                       <TableCell>
                         <div className="flex items-center gap-3">
-                          <div className="size-8 rounded-full bg-cobalt/10 text-cobalt flex items-center justify-center font-bold text-xs shrink-0 uppercase">
+                          <div className="size-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs shrink-0 uppercase ring-1 ring-primary/20">
                             {name.charAt(0)}
                           </div>
                           <div className="min-w-0">
-                            <p className="text-xs font-semibold text-ink flex items-center gap-1.5">
+                            <p className="text-xs font-semibold text-foreground flex items-center gap-1.5">
                               <span>{name}</span>
                               {isCurrent && (
-                                <span className="text-[10px] bg-muted px-1.5 py-0.2 rounded font-normal text-graphite">
+                                <span className="text-[10px] bg-muted px-1.5 py-0.2 rounded font-normal text-muted-foreground">
                                   You
                                 </span>
                               )}
                             </p>
-                            <p className="text-[11px] text-graphite truncate">{email}</p>
+                            <p className="text-[11px] text-muted-foreground truncate">{email}</p>
                           </div>
                         </div>
                       </TableCell>
                       <TableCell>{getRoleBadge(role)}</TableCell>
-                      <TableCell className="text-xs text-graphite">
+                      <TableCell className="text-xs text-muted-foreground font-mono">
                         {member.createdAt
                           ? new Date(member.createdAt).toLocaleDateString()
                           : "Recently"}

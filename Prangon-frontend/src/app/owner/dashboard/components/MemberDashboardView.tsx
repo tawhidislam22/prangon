@@ -127,21 +127,21 @@ export function MemberDashboardView({
     switch (status) {
       case "DONE":
         return (
-          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400">
+          <Badge variant="success" className="text-[10px] font-bold px-2 py-0.5">
             Done
-          </span>
+          </Badge>
         );
       case "IN_PROGRESS":
         return (
-          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400">
+          <Badge variant="warning" className="text-[10px] font-bold px-2 py-0.5">
             In Progress
-          </span>
+          </Badge>
         );
       default:
         return (
-          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+          <Badge variant="neutral" className="text-[10px] font-bold px-2 py-0.5">
             To Do
-          </span>
+          </Badge>
         );
     }
   };
@@ -150,27 +150,27 @@ export function MemberDashboardView({
     switch (priority) {
       case "URGENT":
         return (
-          <span className="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400">
+          <Badge variant="destructive" className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5">
             Urgent
-          </span>
+          </Badge>
         );
       case "HIGH":
         return (
-          <span className="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-400">
+          <Badge variant="warning" className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5">
             High
-          </span>
+          </Badge>
         );
       case "MEDIUM":
         return (
-          <span className="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400">
+          <Badge variant="info" className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5">
             Medium
-          </span>
+          </Badge>
         );
       default:
         return (
-          <span className="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+          <Badge variant="neutral" className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5">
             Low
-          </span>
+          </Badge>
         );
     }
   };

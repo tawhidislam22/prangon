@@ -144,15 +144,15 @@ export default function OnboardingWorkspacePage() {
     <div className="w-full max-w-xl">
       <StepIndicator currentStep={4} />
 
-      <div className="bg-white dark:bg-slate-900 shadow-xl rounded-2xl border border-line dark:border-slate-800 p-8 sm:p-10 space-y-8">
+      <div className="bg-card text-card-foreground shadow-xl rounded-2xl border border-border p-8 sm:p-10 space-y-8">
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-cobalt/10 text-cobalt mb-2">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 text-primary mb-2">
             <LayoutDashboard className="w-6 h-6" />
           </div>
-          <h1 className="text-2xl sm:text-3xl font-display font-bold text-ink dark:text-white tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
             Name your workspace
           </h1>
-          <p className="text-sm text-graphite dark:text-slate-400 max-w-sm mx-auto">
+          <p className="text-sm text-muted-foreground max-w-sm mx-auto">
             This is the shared environment where your team will manage projects and tasks.
           </p>
         </div>
@@ -165,7 +165,7 @@ export default function OnboardingWorkspacePage() {
         )}
 
         {error && (
-          <div className="p-3 text-sm text-red-600 bg-red-50 dark:bg-red-950/40 dark:text-red-400 border border-red-200 dark:border-red-900 rounded-lg">
+          <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-lg">
             {error}
           </div>
         )}
@@ -173,8 +173,8 @@ export default function OnboardingWorkspacePage() {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Workspace Name */}
           <div className="space-y-2">
-            <Label htmlFor="workspaceName" className="text-xs font-semibold uppercase tracking-wider text-graphite dark:text-slate-300">
-              Workspace Name <span className="text-red-500">*</span>
+            <Label htmlFor="workspaceName" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Workspace Name <span className="text-destructive">*</span>
             </Label>
             <Input
               id="workspaceName"
@@ -184,18 +184,18 @@ export default function OnboardingWorkspacePage() {
               disabled={loading || fetchingDraft}
               required
               autoFocus
-              className="h-11 px-4 text-base focus-visible:ring-cobalt"
+              className="h-11 px-4 text-base focus-visible:ring-primary"
             />
           </div>
 
           {/* Workspace Slug */}
           <div className="space-y-2">
-            <Label htmlFor="workspaceSlug" className="text-xs font-semibold uppercase tracking-wider text-graphite dark:text-slate-300 flex items-center gap-1.5">
+            <Label htmlFor="workspaceSlug" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
               <Globe className="w-3.5 h-3.5" />
               Workspace URL Slug
             </Label>
-            <div className="flex items-center rounded-lg border border-line dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 px-3 focus-within:border-cobalt focus-within:ring-2 focus-within:ring-cobalt/20">
-              <span className="text-xs text-graphite/70 dark:text-slate-500 select-none">
+            <div className="flex items-center rounded-lg border border-border bg-muted/40 px-3 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20">
+              <span className="text-xs text-muted-foreground select-none">
                 prangon.app/w/
               </span>
               <Input
@@ -203,11 +203,11 @@ export default function OnboardingWorkspacePage() {
                 value={slug}
                 onChange={handleSlugChange}
                 disabled={loading || fetchingDraft || !!existingWorkspaceSlug}
-                className="h-11 border-0 bg-transparent px-1 text-sm font-medium focus-visible:ring-0 focus-visible:ring-offset-0 shadow-none text-ink dark:text-white"
+                className="h-11 border-0 bg-transparent px-1 text-sm font-medium focus-visible:ring-0 focus-visible:ring-offset-0 shadow-none"
                 placeholder="acme-studio"
               />
             </div>
-            <p className="text-[11px] text-graphite dark:text-slate-500">
+            <p className="text-[11px] text-muted-foreground">
               Letters, numbers, and hyphens only.
             </p>
           </div>
@@ -216,7 +216,7 @@ export default function OnboardingWorkspacePage() {
           <Button
             type="submit"
             disabled={loading || fetchingDraft || !name.trim() || !slug.trim()}
-            className="w-full h-12 bg-cobalt hover:bg-cobalt/90 text-white font-medium text-base shadow-lg shadow-cobalt/20 transition-all flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full h-11 bg-primary hover:bg-primary/90 text-primary-foreground font-medium text-sm shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
           >
             {loading ? (
               <>

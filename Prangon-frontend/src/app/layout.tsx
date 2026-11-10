@@ -2,8 +2,19 @@ import { Toaster } from "@/components/ui/sonner";
 import QueryProviders from "@/providers/QueryProvider";
 import { ThemeProvider } from "@/components/theme-provider";
 import type { Metadata } from "next";
-import { Fraunces, IBM_Plex_Sans } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans, Fraunces, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta-sans",
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
+});
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -33,7 +44,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body
-        className={`${fraunces.variable} ${ibmPlexSans.variable} font-sans antialiased bg-paper text-graphite selection:bg-cobalt/20`}
+        className={`${inter.variable} ${plusJakartaSans.variable} ${fraunces.variable} ${ibmPlexSans.variable} font-sans antialiased bg-background text-foreground selection:bg-primary/20 selection:text-primary`}
       >
         <ThemeProvider
           attribute="class"

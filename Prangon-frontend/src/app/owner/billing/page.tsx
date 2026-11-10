@@ -105,16 +105,16 @@ export default async function BillingPage({
       />
 
       {/* Plan Card */}
-      <Card className="border border-line bg-white shadow-xs overflow-hidden">
-        <div className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 bg-gradient-to-br from-cobalt/5 via-white to-white border-b border-line">
+      <Card className="border border-border bg-card shadow-2xs overflow-hidden">
+        <div className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 bg-gradient-to-br from-primary/5 via-card to-card border-b border-border">
           <div className="space-y-1.5">
             <div className="flex items-center gap-2">
-              <h2 className="text-xl font-bold font-display text-ink">{planTier}</h2>
-              <Badge className={isSubscribed ? "bg-cobalt text-white text-xs" : "bg-muted text-graphite text-xs"}>
+              <h2 className="text-xl font-bold text-foreground">{planTier}</h2>
+              <Badge variant={isSubscribed ? "success" : "neutral"} className="text-xs">
                 {isSubscribed ? "Active" : "Current Plan"}
               </Badge>
             </div>
-            <p className="text-xs text-graphite max-w-md">
+            <p className="text-xs text-muted-foreground max-w-md">
               {isSubscribed
                 ? "Your workspace is unlocked with full collaboration, unlimited projects, and priority support."
                 : "You are currently on the free tier. Upgrade to unlock unlimited members, projects, and advanced integrations."}
@@ -124,15 +124,15 @@ export default async function BillingPage({
           <div className="flex items-center gap-3">
             {isSubscribed ? (
               <form action={handlePortalSession}>
-                <Button type="submit" variant="outline" className="gap-2 text-xs border-line">
-                  <CreditCard className="size-3.5 text-cobalt" />
+                <Button type="submit" variant="outline" className="gap-2 text-xs border-border">
+                  <CreditCard className="size-3.5 text-primary" />
                   <span>Stripe Billing Portal</span>
                   <ExternalLink className="size-3 text-muted-foreground" />
                 </Button>
               </form>
             ) : (
               <Link href={`/owner/billing/upgrade`}>
-                <Button className="bg-cobalt hover:bg-cobalt/90 text-white gap-2 text-xs shadow-xs">
+                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 text-xs shadow-xs">
                   <Zap className="size-3.5 fill-current" />
                   <span>Upgrade to Premium</span>
                 </Button>
@@ -143,22 +143,22 @@ export default async function BillingPage({
 
         {/* Resource Usage Meters */}
         <CardContent className="p-6 space-y-5">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-ink">Resource Limits & Usage</h3>
+          <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">Resource Limits & Usage</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Members Meter */}
-            <div className="p-4 rounded-lg border border-line bg-muted/10 space-y-2">
+            <div className="p-4 rounded-lg border border-border bg-muted/20 space-y-2">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold text-ink flex items-center gap-1.5">
-                  <Users className="size-3.5 text-cobalt" />
+                <span className="font-semibold text-foreground flex items-center gap-1.5">
+                  <Users className="size-3.5 text-primary" />
                   Team Members
                 </span>
-                <span className="text-graphite font-medium">
+                <span className="text-muted-foreground font-medium font-mono text-[11px]">
                   {memberCount} / {memberLimit}
                 </span>
               </div>
               <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-cobalt rounded-full"
+                  className="h-full bg-primary rounded-full transition-all"
                   style={{
                     width: typeof memberLimit === "number" ? `${Math.min(100, (memberCount / memberLimit) * 100)}%` : "20%",
                   }}
@@ -167,19 +167,19 @@ export default async function BillingPage({
             </div>
 
             {/* Projects Meter */}
-            <div className="p-4 rounded-lg border border-line bg-muted/10 space-y-2">
+            <div className="p-4 rounded-lg border border-border bg-muted/20 space-y-2">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold text-ink flex items-center gap-1.5">
-                  <FolderKanban className="size-3.5 text-cobalt" />
+                <span className="font-semibold text-foreground flex items-center gap-1.5">
+                  <FolderKanban className="size-3.5 text-primary" />
                   Active Projects
                 </span>
-                <span className="text-graphite font-medium">
+                <span className="text-muted-foreground font-medium font-mono text-[11px]">
                   {projectCount} / {projectLimit}
                 </span>
               </div>
               <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-cobalt rounded-full"
+                  className="h-full bg-primary rounded-full transition-all"
                   style={{
                     width: typeof projectLimit === "number" ? `${Math.min(100, (projectCount / projectLimit) * 100)}%` : "25%",
                   }}
@@ -188,13 +188,13 @@ export default async function BillingPage({
             </div>
 
             {/* Storage Meter */}
-            <div className="p-4 rounded-lg border border-line bg-muted/10 space-y-2">
+            <div className="p-4 rounded-lg border border-border bg-muted/20 space-y-2">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold text-ink flex items-center gap-1.5">
-                  <HardDrive className="size-3.5 text-cobalt" />
+                <span className="font-semibold text-foreground flex items-center gap-1.5">
+                  <HardDrive className="size-3.5 text-primary" />
                   File Storage
                 </span>
-                <span className="text-graphite font-medium">
+                <span className="text-muted-foreground font-medium font-mono text-[11px]">
                   12 MB / {storageLimit}
                 </span>
               </div>

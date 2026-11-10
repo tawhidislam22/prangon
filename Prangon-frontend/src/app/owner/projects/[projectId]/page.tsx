@@ -54,7 +54,7 @@ export default async function ProjectTasksPage({
           { label: project.name },
         ]}
         badge={
-          <Badge variant="outline" className="bg-cobalt/10 text-cobalt border-cobalt/20 font-semibold text-[11px]">
+          <Badge variant="indigo" className="font-semibold text-[11px] px-2.5 py-0.5">
             {completedCount}/{tasks.length} Completed
           </Badge>
         }

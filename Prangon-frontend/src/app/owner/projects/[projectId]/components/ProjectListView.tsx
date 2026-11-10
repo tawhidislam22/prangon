@@ -28,13 +28,13 @@ export function ProjectListView({ tasks, onSelectTask }: ProjectListViewProps) {
   const getPriorityBadge = (priority: string) => {
     switch (priority) {
       case "URGENT":
-        return <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-red-100 text-red-700">Urgent</span>;
+        return <Badge variant="destructive" className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5">Urgent</Badge>;
       case "HIGH":
-        return <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-orange-100 text-orange-700">High</span>;
+        return <Badge variant="warning" className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5">High</Badge>;
       case "MEDIUM":
-        return <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-blue-100 text-blue-700">Medium</span>;
+        return <Badge variant="info" className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5">Medium</Badge>;
       default:
-        return <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-100 text-slate-700">Low</span>;
+        return <Badge variant="neutral" className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5">Low</Badge>;
     }
   };
 
@@ -45,21 +45,25 @@ export function ProjectListView({ tasks, onSelectTask }: ProjectListViewProps) {
       cell: ({ row }) => (
         <button
           onClick={() => onSelectTask(row.original.id)}
-          className="text-left font-semibold text-foreground hover:text-cobalt flex items-center gap-2"
+          className="text-left font-semibold text-foreground hover:text-primary flex items-center gap-2 group transition-colors"
         >
           {getStatusIcon(row.original.status)}
-          <span>{row.original.title}</span>
+          <span className="group-hover:text-primary transition-colors">{row.original.title}</span>
         </button>
       ),
     },
     {
       accessorKey: "status",
       header: "Status",
-      cell: ({ row }) => (
-        <Badge variant="outline" className="text-[10px] font-semibold">
-          {row.original.status.replace("_", " ")}
-        </Badge>
-      ),
+      cell: ({ row }) => {
+        const s = row.original.status;
+        const variant = s === "DONE" ? "success" : s === "IN_PROGRESS" ? "warning" : "neutral";
+        return (
+          <Badge variant={variant} className="text-[10px] font-bold px-2 py-0.5">
+            {s.replace("_", " ")}
+          </Badge>
+        );
+      },
     },
     {
       accessorKey: "priority",
@@ -70,7 +74,7 @@ export function ProjectListView({ tasks, onSelectTask }: ProjectListViewProps) {
       id: "assignee",
       header: "Assignee",
       cell: ({ row }) => (
-        <span className="text-muted-foreground text-xs">
+        <span className="text-muted-foreground text-xs font-medium">
           {row.original.assignee?.name || "Unassigned"}
         </span>
       ),
@@ -79,7 +83,7 @@ export function ProjectListView({ tasks, onSelectTask }: ProjectListViewProps) {
       accessorKey: "dueDate",
       header: "Due Date",
       cell: ({ row }) => (
-        <span className="text-muted-foreground text-xs">
+        <span className="text-muted-foreground text-xs font-mono">
           {row.original.dueDate
             ? new Date(row.original.dueDate).toLocaleDateString()
             : "—"}
@@ -93,7 +97,7 @@ export function ProjectListView({ tasks, onSelectTask }: ProjectListViewProps) {
         <div className="text-right">
           <button
             onClick={() => onSelectTask(row.original.id)}
-            className="text-xs font-semibold text-cobalt hover:underline inline-flex items-center gap-1"
+            className="text-xs font-semibold text-primary hover:underline inline-flex items-center gap-1 cursor-pointer"
           >
             Details
             <ArrowRight className="size-3" />

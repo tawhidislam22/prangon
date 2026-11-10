@@ -39,13 +39,13 @@ export function TaskList({ workspaceSlug, tasks }: TaskListProps) {
   const getPriorityBadge = (priority: string) => {
     switch (priority) {
       case "URGENT":
-        return <span className="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase bg-red-100 text-red-700">Urgent</span>;
+        return <Badge variant="destructive" className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5">Urgent</Badge>;
       case "HIGH":
-        return <span className="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase bg-orange-100 text-orange-700">High</span>;
+        return <Badge variant="warning" className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5">High</Badge>;
       case "MEDIUM":
-        return <span className="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase bg-blue-100 text-blue-700">Medium</span>;
+        return <Badge variant="info" className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5">Medium</Badge>;
       default:
-        return <span className="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-100 text-slate-700">Low</span>;
+        return <Badge variant="neutral" className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5">Low</Badge>;
     }
   };
 
@@ -80,7 +80,7 @@ export function TaskList({ workspaceSlug, tasks }: TaskListProps) {
                 <div className="flex items-center gap-3 min-w-0">
                   {getStatusIcon(task.status)}
                   <div className="min-w-0">
-                    <p className="text-xs font-semibold text-foreground group-hover:text-cobalt transition-colors truncate">
+                    <p className="text-xs font-semibold text-foreground group-hover:text-primary transition-colors truncate">
                       {task.title}
                     </p>
                     <div className="flex items-center gap-2 mt-0.5 text-[11px] text-muted-foreground">

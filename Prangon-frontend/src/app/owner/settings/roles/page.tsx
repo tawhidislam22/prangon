@@ -119,24 +119,24 @@ export default async function RolesPermissionsPage({
       {/* Settings Navigation Tabs */}
       <SettingsNavTabs isOwner={isOwner} />
 
-      <Card className="border border-line bg-white shadow-xs overflow-hidden">
+      <Card className="border border-border bg-card shadow-2xs overflow-hidden">
         <CardContent className="p-0">
           <Table>
             <TableHeader>
-              <TableRow className="bg-muted/40 hover:bg-muted/40 text-xs font-semibold">
+              <TableRow className="bg-muted/40 hover:bg-muted/40 text-xs font-semibold border-b border-border">
                 <TableHead className="w-[320px]">Capability / Action</TableHead>
                 <TableHead className="text-center">
-                  <Badge className="bg-cobalt/15 text-cobalt border border-cobalt/30 text-xs font-semibold">
+                  <Badge variant="indigo" className="text-xs font-semibold px-2 py-0.5">
                     Owner
                   </Badge>
                 </TableHead>
                 <TableHead className="text-center">
-                  <Badge className="bg-indigo-50 text-indigo-700 border border-indigo-200 text-xs font-semibold">
+                  <Badge variant="info" className="text-xs font-semibold px-2 py-0.5">
                     Admin
                   </Badge>
                 </TableHead>
                 <TableHead className="text-center">
-                  <Badge variant="outline" className="text-slate-600 border-line text-xs">
+                  <Badge variant="neutral" className="text-xs px-2 py-0.5">
                     Member
                   </Badge>
                 </TableHead>
@@ -144,8 +144,8 @@ export default async function RolesPermissionsPage({
             </TableHeader>
             <TableBody>
               {permissions.map((p, idx) => (
-                <TableRow key={idx} className="hover:bg-muted/20 text-xs">
-                  <TableCell className="font-medium text-ink">
+                <TableRow key={idx} className="hover:bg-muted/30 text-xs">
+                  <TableCell className="font-medium text-foreground">
                     {p.feature}
                   </TableCell>
                   <TableCell className="text-center">

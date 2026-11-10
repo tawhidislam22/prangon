@@ -58,8 +58,8 @@ export function SettingsNavTabs({ workspaceSlug, isOwner = true }: SettingsNavTa
                 "text-xs font-semibold px-3 py-1.5 rounded-md flex items-center gap-1.5 transition-colors shrink-0",
                 isActive
                   ? tab.danger
-                    ? "bg-red-500/10 text-red-600 border border-red-500/20 shadow-xs"
-                    : "bg-cobalt text-white shadow-xs"
+                    ? "bg-red-500/10 text-red-600 border border-red-500/20 shadow-2xs"
+                    : "bg-primary text-primary-foreground shadow-2xs"
                   : tab.danger
                   ? "text-red-500 hover:text-red-600 hover:bg-red-500/5"
                   : "text-muted-foreground hover:text-foreground hover:bg-muted"

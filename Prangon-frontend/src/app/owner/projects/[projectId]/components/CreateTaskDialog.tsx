@@ -10,6 +10,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { createTask } from "@/services/task.services";
 
+import { Plus } from "lucide-react";
+
 export function CreateTaskDialog({ projectId }: { projectId: string }) {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
@@ -47,7 +49,10 @@ export function CreateTaskDialog({ projectId }: { projectId: string }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>+ Create Task</Button>
+        <Button className="font-medium text-xs h-9 px-3.5 gap-1.5 shadow-xs">
+          <Plus className="size-3.5" />
+          <span>Create Task</span>
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

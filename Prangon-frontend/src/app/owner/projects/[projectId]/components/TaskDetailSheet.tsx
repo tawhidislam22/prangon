@@ -193,8 +193,17 @@ export function TaskDetailSheet({
               Task Details
             </SheetTitle>
             {task && (
-              <Badge variant="outline" className="text-xs font-semibold">
-                {task.status}
+              <Badge
+                variant={
+                  task.status === "DONE"
+                    ? "success"
+                    : task.status === "IN_PROGRESS"
+                    ? "warning"
+                    : "neutral"
+                }
+                className="text-xs font-semibold px-2 py-0.5"
+              >
+                {task.status.replace("_", " ")}
               </Badge>
             )}
           </div>
@@ -215,7 +224,7 @@ export function TaskDetailSheet({
 
         {loading ? (
           <div className="flex-1 flex items-center justify-center">
-            <Loader2 className="size-6 animate-spin text-cobalt" />
+            <Loader2 className="size-6 animate-spin text-primary" />
           </div>
         ) : task ? (
           <div className="flex-1 overflow-y-auto p-6 space-y-6">
@@ -223,7 +232,7 @@ export function TaskDetailSheet({
             <div className="grid grid-cols-2 gap-4 p-4 rounded-lg bg-muted/20 border border-border/80 text-xs">
               <div className="space-y-1.5">
                 <span className="text-muted-foreground font-medium flex items-center gap-1.5">
-                  <Clock className="size-3.5 text-cobalt" />
+                  <Clock className="size-3.5 text-primary" />
                   Status
                 </span>
                 <Select value={task.status} onValueChange={handleStatusChange}>
@@ -240,7 +249,7 @@ export function TaskDetailSheet({
 
               <div className="space-y-1.5">
                 <span className="text-muted-foreground font-medium flex items-center gap-1.5">
-                  <Activity className="size-3.5 text-cobalt" />
+                  <Activity className="size-3.5 text-primary" />
                   Priority
                 </span>
                 <Select value={task.priority} onValueChange={handlePriorityChange}>
@@ -258,7 +267,7 @@ export function TaskDetailSheet({
 
               <div className="space-y-1.5">
                 <span className="text-muted-foreground font-medium flex items-center gap-1.5">
-                  <User className="size-3.5 text-cobalt" />
+                  <User className="size-3.5 text-primary" />
                   Assignee
                 </span>
                 <p className="text-foreground font-medium py-1.5">
@@ -268,10 +277,10 @@ export function TaskDetailSheet({
 
               <div className="space-y-1.5">
                 <span className="text-muted-foreground font-medium flex items-center gap-1.5">
-                  <Calendar className="size-3.5 text-cobalt" />
+                  <Calendar className="size-3.5 text-primary" />
                   Due Date
                 </span>
-                <p className="text-foreground font-medium py-1.5">
+                <p className="text-foreground font-medium py-1.5 font-mono">
                   {task.dueDate ? new Date(task.dueDate).toLocaleDateString() : "No due date"}
                 </p>
               </div>
@@ -294,7 +303,7 @@ export function TaskDetailSheet({
             {/* Comments Thread */}
             <div className="space-y-3 pt-4 border-t border-border">
               <h4 className="text-xs font-bold uppercase tracking-wider text-foreground flex items-center gap-1.5">
-                <MessageSquare className="size-3.5 text-cobalt" />
+                <MessageSquare className="size-3.5 text-primary" />
                 Comments Thread ({task.comments?.length || 0})
               </h4>
 
@@ -304,7 +313,7 @@ export function TaskDetailSheet({
                   task.comments.map((comment: any) => (
                     <div
                       key={comment.id}
-                      className="p-3.5 rounded-lg border border-border bg-card space-y-1.5 text-xs"
+                      className="p-3.5 rounded-lg border border-border bg-card space-y-1.5 text-xs shadow-2xs"
                     >
                       <div className="flex items-center justify-between">
                         <span className="font-semibold text-foreground">
@@ -337,7 +346,7 @@ export function TaskDetailSheet({
                   type="submit"
                   size="sm"
                   disabled={commentSubmitting || !commentText.trim()}
-                  className="bg-cobalt hover:bg-cobalt/90 text-white shrink-0"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground shrink-0 shadow-xs"
                 >
                   <Send className="size-3.5" />
                 </Button>

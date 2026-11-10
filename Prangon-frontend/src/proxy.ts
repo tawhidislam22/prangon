@@ -158,7 +158,7 @@ export async function proxy(request: NextRequest) {
 
         // Rule-6 User trying to visit role based protected but doesn't have required role
         if (routerOwner === "SUPER_ADMIN" || routerOwner === "WORKSPACE") {
-            const isAuthorizedUser = routerOwner === "WORKSPACE" && (userRole === "OWNER" || userRole === "ADMIN" || userRole === "MEMBER");
+            const isAuthorizedUser = routerOwner === "WORKSPACE" && (userRole === "OWNER" || userRole === "ADMIN" || userRole === "MEMBER" || userRole === "SUPER_ADMIN");
             if (routerOwner !== userRole && !isAuthorizedUser) {
                 return attachCookies(NextResponse.redirect(new URL(getDefaultDashboardRoute(userRole as UserRole), request.url)));
             }

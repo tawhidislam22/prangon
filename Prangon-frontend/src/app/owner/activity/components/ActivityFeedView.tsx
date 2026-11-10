@@ -61,14 +61,14 @@ export function ActivityFeedView({ initialActivities }: { initialActivities: Act
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by action or user..."
-            className="pl-9 h-9 text-xs border-line bg-card"
+            className="pl-9 h-9 text-xs border-border bg-card"
           />
         </div>
 
         <div className="flex items-center gap-2 w-full sm:w-auto">
           <Filter className="size-3.5 text-muted-foreground shrink-0 hidden sm:block" />
           <Select value={entityFilter} onValueChange={setEntityFilter}>
-            <SelectTrigger className="h-9 text-xs w-full sm:w-44 border-line bg-card">
+            <SelectTrigger className="h-9 text-xs w-full sm:w-44 border-border bg-card">
               <SelectValue placeholder="All Categories" />
             </SelectTrigger>
             <SelectContent>
@@ -83,16 +83,16 @@ export function ActivityFeedView({ initialActivities }: { initialActivities: Act
       </div>
 
       {/* Activity Timeline Card */}
-      <Card className="border border-line bg-card shadow-xs overflow-hidden">
+      <Card className="border border-border bg-card shadow-2xs overflow-hidden">
         <CardContent className="p-0">
           {filteredActivities.length > 0 ? (
-            <div className="divide-y divide-line/60">
+            <div className="divide-y divide-border/60">
               {filteredActivities.map((item, idx) => (
                 <div
                   key={item.id || idx}
-                  className="p-4 sm:p-5 flex items-start gap-4 hover:bg-muted/20 transition-colors"
+                  className="p-4 sm:p-5 flex items-start gap-4 hover:bg-muted/30 transition-colors"
                 >
-                  <div className="size-8 rounded-full bg-cobalt/10 text-cobalt flex items-center justify-center shrink-0 mt-0.5">
+                  <div className="size-8 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5 ring-1 ring-primary/20">
                     <Activity className="size-4" />
                   </div>
 

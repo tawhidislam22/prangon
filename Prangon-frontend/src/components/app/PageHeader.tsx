@@ -26,34 +26,34 @@ export function PageHeader({
 }: PageHeaderProps) {
   const actionSlot = actions || action;
   return (
-    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-line mb-8">
-      <div className="space-y-1.5">
+    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-border/70 mb-6">
+      <div className="space-y-1">
         {breadcrumbs && breadcrumbs.length > 0 && (
-          <nav className="flex items-center gap-1.5 text-xs text-graphite mb-2">
+          <nav className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1.5">
             {breadcrumbs.map((crumb, idx) => (
               <React.Fragment key={idx}>
-                {idx > 0 && <ChevronRight className="size-3 text-graphite/40" />}
+                {idx > 0 && <ChevronRight className="size-3 text-muted-foreground/40" />}
                 {crumb.href ? (
-                  <Link href={crumb.href} className="hover:text-ink transition-colors">
+                  <Link href={crumb.href} className="hover:text-foreground transition-colors">
                     {crumb.label}
                   </Link>
                 ) : (
-                  <span className="text-ink font-medium">{crumb.label}</span>
+                  <span className="text-foreground font-medium">{crumb.label}</span>
                 )}
               </React.Fragment>
             ))}
           </nav>
         )}
 
-        <div className="flex items-center gap-3">
-          <h1 className="text-2xl sm:text-3xl font-bold font-display text-ink tracking-tight">
+        <div className="flex items-center gap-3 flex-wrap">
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">
             {title}
           </h1>
           {badge}
         </div>
 
         {description && (
-          <p className="text-sm text-graphite max-w-2xl">{description}</p>
+          <p className="text-xs sm:text-sm text-muted-foreground max-w-2xl">{description}</p>
         )}
       </div>
 

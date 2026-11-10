@@ -94,7 +94,7 @@ export default async function WorkspaceIntegrationsPage({
           { label: "Integrations" },
         ]}
         badge={
-          <Badge variant="outline" className="bg-cobalt/10 text-cobalt border-cobalt/20 font-semibold text-[11px]">
+          <Badge variant="indigo" className="font-semibold text-[11px] px-2.5 py-0.5">
             6 Available
           </Badge>
         }
@@ -108,22 +108,22 @@ export default async function WorkspaceIntegrationsPage({
           return (
             <Card
               key={item.id}
-              className="border border-line bg-white shadow-xs hover:border-cobalt/40 transition-all flex flex-col justify-between"
+              className="border border-border bg-card shadow-2xs hover:border-primary/40 hover:shadow-xs transition-all flex flex-col justify-between group"
             >
               <CardHeader className="p-5 pb-3">
                 <div className="flex items-start justify-between gap-3">
-                  <div className="size-10 rounded-lg bg-cobalt/10 text-cobalt flex items-center justify-center font-bold text-sm shrink-0">
+                  <div className="size-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-bold text-sm shrink-0 ring-1 ring-primary/20 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                     <Icon className="size-5" />
                   </div>
-                  <Badge variant="outline" className={`text-[10px] font-semibold ${item.badgeColor}`}>
+                  <Badge variant={isConnected ? "success" : "neutral"} className="text-[10px] font-semibold">
                     {isConnected && <CheckCircle2 className="size-3 mr-1" />}
                     {item.status}
                   </Badge>
                 </div>
-                <CardTitle className="text-base font-bold font-display text-ink mt-3">
+                <CardTitle className="text-base font-bold text-foreground mt-3 group-hover:text-primary transition-colors">
                   {item.name}
                 </CardTitle>
-                <CardDescription className="text-xs text-graphite line-clamp-2 mt-1 min-h-[32px]">
+                <CardDescription className="text-xs text-muted-foreground line-clamp-2 mt-1 min-h-[32px] leading-relaxed">
                   {item.description}
                 </CardDescription>
               </CardHeader>
@@ -134,8 +134,8 @@ export default async function WorkspaceIntegrationsPage({
                   size="sm"
                   className={`w-full text-xs font-semibold gap-1.5 ${
                     item.actionVariant === "default"
-                      ? "bg-cobalt hover:bg-cobalt/90 text-white shadow-xs"
-                      : "border-line"
+                      ? "bg-primary hover:bg-primary/90 text-primary-foreground shadow-xs"
+                      : "border-border hover:bg-muted"
                   }`}
                 >
                   <span>{item.buttonText}</span>

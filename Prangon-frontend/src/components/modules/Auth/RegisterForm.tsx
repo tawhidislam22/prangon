@@ -49,10 +49,10 @@ const RegisterForm = ({ redirectPath }: RegisterFormProps) => {
         }
     })
   return (
-    <Card className="w-full max-w-md mx-auto shadow-2xl rounded-2xl border border-line relative z-20">
-      <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-bold">Create an Account</CardTitle>
-        <CardDescription>
+    <Card className="w-full max-w-md mx-auto shadow-xl rounded-2xl border border-border bg-card text-card-foreground relative z-20">
+      <CardHeader className="text-center pb-4">
+        <CardTitle className="text-2xl font-bold tracking-tight">Create an Account</CardTitle>
+        <CardDescription className="text-muted-foreground">
           Enter your details to register.
         </CardDescription>
       </CardHeader>
@@ -72,17 +72,17 @@ const RegisterForm = ({ redirectPath }: RegisterFormProps) => {
           <form.Field name="role" validators={{ onChange: registerZodSchema.shape.role }}>
             {(field) => (
               <div className="space-y-1.5 pb-1">
-                <label className="text-xs font-semibold uppercase tracking-wider text-graphite">
+                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                   Register as
                 </label>
-                <div className="grid grid-cols-2 p-1 bg-ink/5 dark:bg-muted/40 rounded-xl border border-line dark:border-border gap-1">
+                <div className="grid grid-cols-2 p-1 bg-muted/50 rounded-xl border border-border gap-1">
                   <button
                     type="button"
                     onClick={() => field.handleChange("OWNER")}
                     className={`flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-sm font-medium transition-all cursor-pointer ${
                       field.state.value === "OWNER"
-                        ? "bg-white dark:bg-card text-foreground shadow-xs border border-line dark:border-border font-semibold"
-                        : "text-muted-foreground hover:text-foreground hover:bg-white/40 dark:hover:bg-muted/50"
+                        ? "bg-card text-foreground shadow-xs border border-border font-semibold"
+                        : "text-muted-foreground hover:text-foreground hover:bg-card/50"
                     }`}
                   >
                     <Building2 className="size-4" />
@@ -93,8 +93,8 @@ const RegisterForm = ({ redirectPath }: RegisterFormProps) => {
                     onClick={() => field.handleChange("MEMBER")}
                     className={`flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-sm font-medium transition-all cursor-pointer ${
                       field.state.value === "MEMBER"
-                        ? "bg-white dark:bg-card text-foreground shadow-xs border border-line dark:border-border font-semibold"
-                        : "text-muted-foreground hover:text-foreground hover:bg-white/40 dark:hover:bg-muted/50"
+                        ? "bg-card text-foreground shadow-xs border border-border font-semibold"
+                        : "text-muted-foreground hover:text-foreground hover:bg-card/50"
                     }`}
                   >
                     <Users className="size-4" />

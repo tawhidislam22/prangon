@@ -121,11 +121,11 @@ export function ProfileForm({ user, workspaceSlug }: ProfileFormProps) {
                 </p>
                 <p className="text-xs text-muted-foreground">{user.email}</p>
                 <div className="flex items-center gap-1.5 pt-0.5">
-                  <Badge className="bg-cobalt/10 text-cobalt border-cobalt/20 text-[10px]">
+                  <Badge variant="indigo" className="text-[10px]">
                     {user.role || "Member"}
                   </Badge>
                   {user.emailVerified && (
-                    <Badge className="bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400 border-emerald-200 text-[10px] gap-1">
+                    <Badge variant="success" className="text-[10px] gap-1">
                       <CheckCircle2 className="size-2.5" />
                       <span>Verified</span>
                     </Badge>
@@ -145,7 +145,7 @@ export function ProfileForm({ user, workspaceSlug }: ProfileFormProps) {
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Your full name"
                 required
-                className="h-9 text-xs border-line bg-card"
+                className="h-9 text-xs border-border bg-card"
               />
             </div>
 
@@ -159,7 +159,7 @@ export function ProfileForm({ user, workspaceSlug }: ProfileFormProps) {
                   id="email"
                   value={user.email}
                   disabled
-                  className="h-9 text-xs border-line bg-muted text-muted-foreground pr-8 cursor-not-allowed"
+                  className="h-9 text-xs border-border bg-muted text-muted-foreground pr-8 cursor-not-allowed"
                 />
                 <ShieldCheck className="absolute right-2.5 top-1/2 -translate-y-1/2 size-4 text-emerald-600" />
               </div>
@@ -172,7 +172,7 @@ export function ProfileForm({ user, workspaceSlug }: ProfileFormProps) {
             <Button
               type="submit"
               disabled={isLoading}
-              className="text-xs font-semibold gap-1.5 bg-cobalt hover:bg-cobalt/90 text-white shadow-xs"
+              className="text-xs font-semibold gap-1.5 bg-primary hover:bg-primary/90 text-primary-foreground shadow-xs"
             >
               {isLoading ? (
                 <Loader2 className="size-3.5 animate-spin" />
@@ -186,10 +186,10 @@ export function ProfileForm({ user, workspaceSlug }: ProfileFormProps) {
       </form>
 
       {/* Notification Preferences Card */}
-      <Card className="border border-line bg-card shadow-xs">
+      <Card className="border border-border bg-card shadow-2xs">
         <CardHeader className="p-6 pb-4">
-          <CardTitle className="text-base font-bold font-display text-foreground flex items-center gap-2">
-            <Bell className="size-4 text-cobalt" />
+          <CardTitle className="text-base font-bold text-foreground flex items-center gap-2">
+            <Bell className="size-4 text-primary" />
             Notification Preferences
           </CardTitle>
           <CardDescription className="text-xs text-muted-foreground">
@@ -197,7 +197,7 @@ export function ProfileForm({ user, workspaceSlug }: ProfileFormProps) {
           </CardDescription>
         </CardHeader>
         <CardContent className="p-6 pt-0 space-y-4">
-          <div className="flex items-center justify-between p-3.5 bg-muted/30 rounded-lg border border-line">
+          <div className="flex items-center justify-between p-3.5 bg-muted/20 rounded-lg border border-border">
             <div className="space-y-0.5">
               <p className="text-xs font-semibold text-foreground">Task Assignments & Mentions</p>
               <p className="text-[11px] text-muted-foreground">

@@ -9,44 +9,65 @@ import { motion } from 'framer-motion';
 export default function FeaturesPage() {
   return (
     <>
-      <Section variant="paper" className="pt-16 pb-12 md:pt-24 md:pb-16 border-b border-line">
-        <div className="max-w-4xl mx-auto text-center">
+      <Section variant="ink" className="py-20 md:py-28 bg-[#0B0F19] text-center border-b border-white/[0.08]">
+        <div className="max-w-4xl mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-2">
+            <span>Enterprise Primitives</span>
+          </div>
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="font-display text-5xl sm:text-6xl text-ink mb-6"
+            className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight"
           >
-            Platform Features
+            Engineered for Mission-Critical Multi-Tenancy
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="font-sans text-xl text-graphite"
+            className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed"
           >
-            A comprehensive suite of tools designed to help you build and scale multi-tenant applications faster.
+            A comprehensive suite of foundational primitives designed to help engineering teams deploy, isolate, and monetize multi-tenant applications with zero infrastructure drag.
           </motion.p>
         </div>
       </Section>
       
-      <Section variant="paper" className="py-10 md:py-12">
+      <Section variant="paper" className="py-12 md:py-20">
         <FeatureBlock 
-          title="Instant Multi-Tenancy"
-          description="Create isolated workspaces for your customers in seconds. We handle the complex data routing and partitioning automatically, ensuring tenant data is cryptographically secure."
+          tag="ISOLATION ENGINE"
+          title="Hardware-Enforced Multi-Tenancy"
+          description="Create isolated workspaces for your customers in seconds. We handle the complex data routing and partitioning automatically, ensuring tenant data is cryptographically isolated."
+          highlights={[
+            "Zero memory bleed across isolated tenant memory pools",
+            "Automated per-tenant cryptographic keys with KMS integration",
+            "Non-blocking database shard migration pipelines"
+          ]}
           imageSrc="/feature_multitenant.jpg"
           imageAlt="Multi-tenant architecture dashboard"
         />
         <FeatureBlock 
-          title="Built-in Authentication"
-          description="Secure, frictionless login with support for SSO, SAML, and passwordless authentication out of the box. Protect your application without writing complex auth middleware."
+          tag="ZERO-TRUST AUTH"
+          title="Enterprise SSO & Directory Sync"
+          description="Secure, frictionless login with support for Okta, Azure AD, Google Workspace SAML, and passwordless authentication out of the box. Protect your application without writing complex auth middleware."
+          highlights={[
+            "Real-time SCIM 2.0 user de-provisioning & group syncing",
+            "Fine-grained RBAC & ABAC policy rule engine",
+            "Tenant-level session invalidation & audit enforcement"
+          ]}
           imageSrc="/feature_auth.jpg"
           imageAlt="Secure authentication flow"
           reverse
         />
         <FeatureBlock 
-          title="Automated Billing"
-          description="Connect your Stripe account and automatically manage subscriptions, usage-based billing, and invoicing per workspace. Prevent churn with automated dunning flows."
+          tag="MONETIZATION"
+          title="Automated Multi-Tenant Billing"
+          description="Connect your Stripe account and automatically manage subscriptions, usage-based metering, per-seat quotas, and invoicing per workspace. Prevent churn with automated dunning flows."
+          highlights={[
+            "Usage-based metering for API requests, storage, and collaborators",
+            "Self-service Stripe customer billing portal integration",
+            "Automatic invoice generation and multi-currency support"
+          ]}
           imageSrc="/feature_billing.jpg"
           imageAlt="SaaS Billing dashboard"
         />

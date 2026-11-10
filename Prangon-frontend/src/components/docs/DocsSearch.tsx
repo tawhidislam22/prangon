@@ -41,7 +41,7 @@ export function DocsSearch() {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="inline-flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-line bg-white px-4 py-2 text-sm text-graphite shadow-sm transition-colors hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+        className="inline-flex h-10 w-full items-center justify-between whitespace-nowrap rounded-xl border border-border bg-card/80 px-4 py-2 text-sm text-muted-foreground shadow-xs transition-all hover:bg-card hover:text-foreground hover:border-primary/40 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary cursor-pointer"
       >
         <span className="flex items-center gap-2">
           <Search className="h-4 w-4" />

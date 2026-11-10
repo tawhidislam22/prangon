@@ -13,17 +13,20 @@ export const metadata = {
 
 export default function DocsLandingPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-paper">
+    <div className="flex flex-col min-h-screen bg-background">
       {/* Hero */}
-      <Section variant="ink" className="py-20 sm:py-28">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="font-display text-5xl sm:text-6xl text-paper mb-6">
-            Documentation
+      <Section variant="ink" className="py-20 sm:py-28 bg-[#0B0F19] text-center border-b border-white/[0.08]">
+        <div className="max-w-3xl mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-primary/10 border border-primary/20 text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-2">
+            <span>Knowledge Base</span>
+          </div>
+          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
+            PRANGON Documentation
           </h1>
-          <p className="font-sans text-xl text-paper/80 mb-10">
-            Everything you need to set up your workspace, manage your team, and build with Prangon.
+          <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed mb-6">
+            Everything you need to provision multi-tenant workspaces, enforce zero-trust isolation, and scale with the PRANGON API.
           </p>
-          <div className="max-w-xl mx-auto text-left">
+          <div className="max-w-xl mx-auto text-left pt-2">
             <DocsSearch />
           </div>
         </div>
@@ -31,7 +34,11 @@ export default function DocsLandingPage() {
 
       {/* Category Grid */}
       <Section variant="paper" className="py-16 md:py-24 border-none">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 border-t border-l border-line rounded-tl-xl rounded-tr-xl overflow-hidden shadow-sm">
+        <div className="max-w-3xl mb-12">
+          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">Browse by Topic</h2>
+          <p className="text-sm text-muted-foreground mt-1">Explore guided architectures, APIs, and administrative controls.</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {docsNav.map((section, i) => (
             <DocsIndexCard
               key={i}
@@ -45,22 +52,22 @@ export default function DocsLandingPage() {
       </Section>
 
       {/* Popular Articles */}
-      <Section variant="paper" className="pt-0 pb-16 md:pb-24 border-none">
-        <h2 className="font-display text-3xl text-ink mb-8">Popular guides</h2>
+      <Section variant="elevated" className="py-16 md:py-24 border-t border-border">
+        <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground mb-8">Popular Architecture Guides</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
-            { title: "Creating a Workspace", href: "/docs/getting-started/creating-a-workspace" },
-            { title: "Roles & Permissions Overview", href: "/docs/roles-and-permissions" },
-            { title: "Free vs Premium Plans", href: "/docs/plans-and-billing" },
+            { title: "Creating & Sharding Workspaces", href: "/docs/getting-started/creating-a-workspace" },
+            { title: "Roles, Permissions & RBAC Policies", href: "/docs/roles-and-permissions" },
+            { title: "Free vs Premium Multi-Tenant Plans", href: "/docs/plans-and-billing" },
           ].map((guide, i) => (
             <Link
               key={i}
               href={guide.href}
-              className="group flex flex-col justify-between p-6 rounded-xl border border-line bg-white hover:border-cobalt transition-colors"
+              className="group flex flex-col justify-between p-6 rounded-2xl border border-border bg-card/60 backdrop-blur-md hover:border-primary/40 hover:shadow-lg transition-all duration-300"
             >
-              <span className="font-medium text-ink group-hover:text-cobalt mb-4">{guide.title}</span>
-              <span className="flex items-center text-sm font-medium text-cobalt">
-                Read guide <ArrowRight className="ml-2 h-4 w-4" />
+              <span className="font-semibold text-base text-foreground group-hover:text-primary mb-4 leading-snug">{guide.title}</span>
+              <span className="flex items-center text-xs font-semibold text-primary group-hover:translate-x-1 transition-transform">
+                Read guide <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
               </span>
             </Link>
           ))}

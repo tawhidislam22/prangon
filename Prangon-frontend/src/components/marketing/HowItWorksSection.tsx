@@ -1,93 +1,160 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion, Variants } from "framer-motion";
 import { Section } from "./Section";
-import { Layers, Shield, Zap } from "lucide-react";
+import { Layers, Shield, Zap, Terminal, CheckCircle2, ArrowRight } from "lucide-react";
 
 const steps = [
   {
+    step: "01",
     icon: Layers,
-    title: "1. Create Workspaces",
-    description: "Launch isolated workspaces for each client or team. Data is segregated from day one with zero configuration.",
+    title: "Model Workspaces & Tenants",
+    description: "Define customer workspace schemas and isolated database partitions with declarative primitives. Zero raw SQL boilerplate.",
+    code: `import { PrangonClient } from "@prangon/sdk-node";
+
+export const prangon = new PrangonClient({
+  apiKey: process.env.PRANGON_API_KEY,
+  isolationMode: "CRYPTOGRAPHIC_SHARD",
+  defaultRegion: "eu-west-1",
+});`,
+    terminal: "✔ Workspace partition created: acme-corp (id: wsp_9a823b1)"
   },
   {
+    step: "02",
     icon: Shield,
-    title: "2. Define Roles",
-    description: "Assign Owner, Admin, and Member permissions. Granular RBAC ensures users only see what they are authorized to see.",
+    title: "Inject Zero-Trust Middleware",
+    description: "Every HTTP request is verified against cryptographic tenant cookies, enforcing strict Row-Level Security at the edge.",
+    code: `import { createTenantGuard } from "@prangon/middleware";
+
+export const middleware = createTenantGuard({
+  strictIsolation: true,
+  enforceAuditLog: true,
+  onTenantMismatch: "REJECT_WITH_ALERT",
+});`,
+    terminal: "✔ Tenant context verified: tenant_id='wsp_9a823b1' [0.8ms]"
   },
   {
+    step: "03",
     icon: Zap,
-    title: "3. Scale Instantly",
-    description: "Connect Stripe to monetize your application. Add AI features and integrations without touching the core infrastructure.",
+    title: "Scale Globally with Automated Billing",
+    description: "Provision multi-region pods in under 800ms while Stripe syncs per-seat quotas and usage meters automatically.",
+    code: `await prangon.billing.meterUsage({
+  workspaceId: "wsp_9a823b1",
+  metric: "active_collaborators",
+  quantity: 24,
+});`,
+    terminal: "✔ Usage synced with Stripe webhook: tier='ENTERPRISE_SCALE'"
   }
 ];
 
 export function HowItWorksSection() {
+  const [activeStep, setActiveStep] = useState(0);
+
   const container: Variants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
+      transition: { staggerChildren: 0.15 }
     }
   };
 
   const item: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 70, damping: 15 } }
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
   };
 
   return (
-    <Section variant="ink" className="py-10 md:py-12 relative overflow-hidden">
-      <div className="w-full max-w-[1400px] mx-auto relative z-10">
-        <div className="text-center mb-12">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="font-display text-4xl sm:text-5xl text-paper mb-6"
-          >
-            How it works
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ delay: 0.1 }}
-            className="font-sans text-xl text-paper/70 max-w-2xl mx-auto"
-          >
-            Three simple steps to transition from a chaotic monolithic architecture to a strictly isolated, multi-tenant workspace.
-          </motion.p>
+    <Section variant="ink" className="py-20 md:py-28 relative overflow-hidden bg-[#0A0E18]">
+      {/* Background glow */}
+      <div className="absolute top-1/3 left-10 w-96 h-96 bg-primary/10 rounded-full blur-[140px] pointer-events-none" />
+
+      <div className="w-full max-w-[1320px] mx-auto relative z-10">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-4">
+            <span>Architecture Walkthrough</span>
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-6">
+            How PRANGON powers your stack
+          </h2>
+          <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
+            Transition from a fragile single-database architecture to hardware-grade multi-tenancy in three simple steps.
+          </p>
         </div>
 
-        <motion.div 
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
-        >
-          {steps.map((step, i) => (
-            <motion.div 
-              key={i} 
-              variants={item}
-              className="relative p-8 rounded-2xl border border-line-dark bg-ink shadow-lg hover:border-cobalt transition-colors group"
-            >
-              {/* Subtle background highlight on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-cobalt/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl pointer-events-none" />
-              
-              <div className="w-14 h-14 bg-line-dark rounded-xl flex items-center justify-center mb-6 text-paper group-hover:bg-cobalt group-hover:text-white transition-colors">
-                <step.icon className="w-7 h-7" />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          {/* Steps List */}
+          <motion.div 
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-100px" }}
+            className="lg:col-span-5 space-y-4"
+          >
+            {steps.map((s, idx) => {
+              const isActive = activeStep === idx;
+              return (
+                <div
+                  key={s.step}
+                  onClick={() => setActiveStep(idx)}
+                  className={`p-6 rounded-2xl border transition-all duration-300 cursor-pointer ${
+                    isActive
+                      ? "border-primary/50 bg-slate-900/90 shadow-xl shadow-primary/10"
+                      : "border-slate-800/80 bg-slate-900/40 hover:border-slate-700 hover:bg-slate-900/60"
+                  }`}
+                >
+                  <div className="flex items-center gap-4 mb-3">
+                    <span className={`text-xs font-mono font-bold px-2.5 py-1 rounded-md ${
+                      isActive ? "bg-primary text-primary-foreground" : "bg-slate-800 text-slate-400"
+                    }`}>
+                      {s.step}
+                    </span>
+                    <h3 className="text-lg font-bold text-white">
+                      {s.title}
+                    </h3>
+                  </div>
+                  <p className="text-sm text-slate-400 leading-relaxed pl-11">
+                    {s.description}
+                  </p>
+                </div>
+              );
+            })}
+          </motion.div>
+
+          {/* Interactive Code & Execution Terminal */}
+          <div className="lg:col-span-7">
+            <div className="rounded-2xl border border-slate-800 bg-[#0F131D] shadow-2xl overflow-hidden">
+              {/* Window Header */}
+              <div className="flex items-center justify-between px-4 py-3 border-b border-slate-800/80 bg-slate-950/60">
+                <div className="flex items-center gap-2">
+                  <span className="w-3 h-3 rounded-full bg-red-500/80" />
+                  <span className="w-3 h-3 rounded-full bg-amber-500/80" />
+                  <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
+                  <span className="ml-2 text-xs font-mono text-slate-400">sdk-integration.ts</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs font-mono text-indigo-400">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>LIVE CLOUD RUNTIME</span>
+                </div>
               </div>
-              <h3 className="font-display text-2xl text-paper mb-4">{step.title}</h3>
-              <p className="text-paper/70 leading-relaxed">
-                {step.description}
-              </p>
-            </motion.div>
-          ))}
-        </motion.div>
+
+              {/* Code Panel */}
+              <div className="p-6 font-mono text-xs sm:text-sm text-slate-300 bg-slate-950/40 overflow-x-auto">
+                <pre className="leading-relaxed">
+                  <code>{steps[activeStep].code}</code>
+                </pre>
+              </div>
+
+              {/* Terminal Output */}
+              <div className="px-6 py-4 border-t border-slate-800/80 bg-[#070A11] flex items-center gap-3">
+                <Terminal className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span className="font-mono text-xs text-emerald-400 truncate">
+                  {steps[activeStep].terminal}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </Section>
   );

@@ -25,15 +25,15 @@ export function DocsLayout({ children, title, sections = [] }: DocsLayoutProps) 
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
         
         {/* Mobile Sidebar Toggle */}
-        <div className="lg:hidden flex items-center border-b border-line pb-4 mb-4">
+        <div className="lg:hidden flex items-center border-b border-border pb-4 mb-4">
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="outline" size="sm" className="gap-2 bg-white">
+              <Button variant="outline" size="sm" className="gap-2 bg-card border-border">
                 <Menu className="h-4 w-4" />
-                Docs Menu
+                Docs Navigation
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-80 pr-0">
+            <SheetContent side="left" className="w-80 pr-0 bg-card border-border">
               <SheetTitle className="sr-only">Documentation Menu</SheetTitle>
               <div className="h-full overflow-y-auto pr-6 pt-4">
                 <DocsSidebar />
@@ -50,19 +50,19 @@ export function DocsLayout({ children, title, sections = [] }: DocsLayoutProps) 
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 min-w-0 max-w-[68ch]">
+        <main className="flex-1 min-w-0 max-w-[72ch]">
           <div className="mb-8">
-            <div className="flex items-center text-sm text-graphite mb-4 gap-2">
-               <Link href="/docs" className="hover:text-ink hover:underline">Docs</Link>
+            <div className="flex items-center text-xs text-muted-foreground mb-4 gap-2">
+               <Link href="/docs" className="hover:text-foreground hover:underline">Docs</Link>
                <ChevronRight className="h-3 w-3" />
-               <span className="text-ink truncate">{title}</span>
+               <span className="text-foreground font-medium truncate">{title}</span>
             </div>
-            <h1 className="font-display text-4xl sm:text-5xl text-ink tracking-tight mb-4">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground mb-4">
               {title}
             </h1>
           </div>
           
-          <div className="prose prose-zinc max-w-none font-sans text-ink leading-relaxed prose-headings:font-display prose-headings:text-ink prose-a:text-cobalt prose-a:no-underline hover:prose-a:underline prose-strong:text-ink prose-th:text-left prose-table:text-sm">
+          <div className="prose prose-zinc dark:prose-invert max-w-none font-sans text-foreground leading-relaxed prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-foreground prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-strong:text-foreground prose-th:text-left prose-table:text-sm">
             {children}
           </div>
 

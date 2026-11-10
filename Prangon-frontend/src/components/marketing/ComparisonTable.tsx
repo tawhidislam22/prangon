@@ -12,45 +12,47 @@ const features = [
 
 export function ComparisonTable() {
   return (
-    <div className="overflow-x-auto w-full">
-      <table className="w-full text-left font-sans border-collapse">
-        <thead>
-          <tr className="border-b border-line">
-            <th className="py-4 px-6 font-medium text-ink w-2/5">Feature</th>
-            <th className="py-4 px-6 font-medium text-ink w-1/5">Starter</th>
-            <th className="py-4 px-6 font-medium text-ink w-1/5">Pro</th>
-            <th className="py-4 px-6 font-medium text-ink w-1/5">Enterprise</th>
-          </tr>
-        </thead>
-        <tbody>
-          {features.map((feature, idx) => (
-            <tr key={feature.name} className="border-b border-line last:border-0 hover:bg-ink/5 transition-colors">
-              <td className="py-4 px-6 text-ink">{feature.name}</td>
-              <td className="py-4 px-6 text-graphite">
-                {typeof feature.starter === 'boolean' ? (
-                  feature.starter ? <Check className="w-5 h-5 text-ink" /> : <Minus className="w-5 h-5 text-line-dark" />
-                ) : (
-                  feature.starter
-                )}
-              </td>
-              <td className="py-4 px-6 text-graphite">
-                {typeof feature.pro === 'boolean' ? (
-                  feature.pro ? <Check className="w-5 h-5 text-ink" /> : <Minus className="w-5 h-5 text-line-dark" />
-                ) : (
-                  feature.pro
-                )}
-              </td>
-              <td className="py-4 px-6 text-graphite">
-                {typeof feature.enterprise === 'boolean' ? (
-                  feature.enterprise ? <Check className="w-5 h-5 text-ink" /> : <Minus className="w-5 h-5 text-line-dark" />
-                ) : (
-                  feature.enterprise
-                )}
-              </td>
+    <div className="rounded-2xl border border-border bg-card/60 backdrop-blur-md overflow-hidden shadow-sm">
+      <div className="overflow-x-auto w-full">
+        <table className="w-full text-left border-collapse">
+          <thead>
+            <tr className="border-b border-border/80 bg-muted/40">
+              <th className="py-4 px-6 text-xs font-bold uppercase tracking-wider text-muted-foreground w-2/5">Capability</th>
+              <th className="py-4 px-6 text-xs font-bold uppercase tracking-wider text-muted-foreground w-1/5">Developer</th>
+              <th className="py-4 px-6 text-xs font-bold uppercase tracking-wider text-primary w-1/5">Growth</th>
+              <th className="py-4 px-6 text-xs font-bold uppercase tracking-wider text-muted-foreground w-1/5">Enterprise</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="divide-y divide-border/60 text-sm">
+            {features.map((feature) => (
+              <tr key={feature.name} className="hover:bg-muted/30 transition-colors">
+                <td className="py-4 px-6 font-semibold text-foreground">{feature.name}</td>
+                <td className="py-4 px-6 text-muted-foreground">
+                  {typeof feature.starter === 'boolean' ? (
+                    feature.starter ? <Check className="w-4 h-4 text-emerald-400" /> : <Minus className="w-4 h-4 text-muted-foreground/40" />
+                  ) : (
+                    feature.starter
+                  )}
+                </td>
+                <td className="py-4 px-6 font-medium text-foreground">
+                  {typeof feature.pro === 'boolean' ? (
+                    feature.pro ? <Check className="w-4 h-4 text-emerald-400" /> : <Minus className="w-4 h-4 text-muted-foreground/40" />
+                  ) : (
+                    feature.pro
+                  )}
+                </td>
+                <td className="py-4 px-6 text-muted-foreground">
+                  {typeof feature.enterprise === 'boolean' ? (
+                    feature.enterprise ? <Check className="w-4 h-4 text-emerald-400" /> : <Minus className="w-4 h-4 text-muted-foreground/40" />
+                  ) : (
+                    feature.enterprise
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

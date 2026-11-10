@@ -10,9 +10,9 @@ interface CalloutProps {
 
 export function Callout({ type = "info", title, children, className }: CalloutProps) {
   const styles = {
-    info: { container: "bg-blue-50/50 border-blue-200 text-blue-900", icon: Info, iconColor: "text-blue-600" },
-    warning: { container: "bg-amber-50/50 border-amber-200 text-amber-900", icon: AlertCircle, iconColor: "text-amber-600" },
-    tip: { container: "bg-green-50/50 border-green-200 text-green-900", icon: Lightbulb, iconColor: "text-green-600" },
+    info: { container: "bg-blue-50/50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-900/60 text-blue-900 dark:text-blue-200", icon: Info, iconColor: "text-blue-600 dark:text-blue-400" },
+    warning: { container: "bg-amber-50/50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-900/60 text-amber-900 dark:text-amber-200", icon: AlertCircle, iconColor: "text-amber-600 dark:text-amber-400" },
+    tip: { container: "bg-emerald-50/50 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-900/60 text-emerald-900 dark:text-emerald-200", icon: Lightbulb, iconColor: "text-emerald-600 dark:text-emerald-400" },
   };
   const { container, icon: Icon, iconColor } = styles[type];
 

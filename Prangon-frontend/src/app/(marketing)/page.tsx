@@ -12,14 +12,17 @@ export default function HomePage() {
     <>
       <Hero />
       
-      <Section variant="paper" className="py-10 md:py-12">
-        <div className="max-w-4xl mb-12 mx-auto text-center">
-          <h2 className="font-display text-4xl sm:text-5xl text-ink mb-6">
-            Everything you need. <br className="hidden sm:block" />
-            Nothing you don't.
+      <Section variant="paper" className="py-20 md:py-28">
+        <div className="max-w-4xl mb-16 mx-auto text-center space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-2">
+            <span>Core Primitives</span>
+          </div>
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-tight">
+            Everything your SaaS needs. <br className="hidden sm:block" />
+            Zero infrastructure debt.
           </h2>
-          <p className="font-sans text-xl text-graphite">
-            Prangon handles the complex infrastructure so you can focus on building your product. Multi-tenancy, authentication, and billing built right in.
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Prangon handles the complex multi-tenant primitives so you can focus on building your core product. Hardware-grade isolation, automated billing, and granular RBAC built in.
           </p>
         </div>
         <FeatureGrid />
@@ -27,7 +30,7 @@ export default function HomePage() {
 
       <HowItWorksSection />
       
-      <Section variant="paper" className="py-10 md:py-12 border-t border-line">
+      <Section variant="elevated" className="py-16 md:py-24 border-t border-border">
         <div className="max-w-4xl mx-auto text-center">
           <Quote 
             quote="Prangon saved us months of engineering time. We launched our enterprise tier in weeks instead of quarters."

@@ -12,15 +12,18 @@ export const metadata = {
 
 export default function BlogIndex() {
   return (
-    <div className="flex flex-col min-h-screen bg-paper">
+    <div className="flex flex-col min-h-screen bg-background">
       {/* Hero Section */}
-      <Section variant="ink" className="py-20 sm:py-28">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="font-display text-5xl sm:text-6xl text-paper mb-6">
-            The Prangon Blog
+      <Section variant="ink" className="py-20 sm:py-28 bg-[#0B0F19] text-center border-b border-white/[0.08]">
+        <div className="max-w-3xl mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-primary/10 border border-primary/20 text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-2">
+            <span>Engineering &amp; Product</span>
+          </div>
+          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
+            The PRANGON Blog
           </h1>
-          <p className="font-sans text-xl text-paper/80 mb-0">
-            Product updates, engineering deep dives, and thoughts on building better workspaces.
+          <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+            Product updates, multi-tenant engineering deep dives, and architecture guides from the PRANGON team.
           </p>
         </div>
       </Section>
@@ -32,42 +35,42 @@ export default function BlogIndex() {
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="group flex flex-col h-full rounded-xl border border-line bg-white overflow-hidden hover:border-cobalt transition-colors duration-200"
+              className="group flex flex-col h-full rounded-2xl border border-border bg-card/60 backdrop-blur-md overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300"
             >
               {/* Card Header (Placeholder Image) */}
               <div className={cn("h-48 w-full transition-transform duration-500 group-hover:scale-105", post.coverGradient)} />
               
               {/* Card Body */}
-              <div className="flex flex-col flex-1 p-6 sm:p-8 bg-white z-10">
+              <div className="flex flex-col flex-1 p-6 sm:p-8 bg-card/90 z-10">
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-cobalt">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-primary">
                     {post.category}
                   </span>
-                  <span className="w-1 h-1 rounded-full bg-line-dark" />
-                  <span className="text-xs font-medium text-graphite">
+                  <span className="w-1 h-1 rounded-full bg-border" />
+                  <span className="text-xs font-medium text-muted-foreground">
                     {post.readTime}
                   </span>
                 </div>
                 
-                <h2 className="font-display text-2xl text-ink mb-3 group-hover:text-cobalt transition-colors">
+                <h2 className="text-xl font-bold tracking-tight text-foreground mb-3 group-hover:text-primary transition-colors">
                   {post.title}
                 </h2>
                 
-                <p className="text-graphite text-sm leading-relaxed mb-8 flex-1">
+                <p className="text-muted-foreground text-sm leading-relaxed mb-8 flex-1">
                   {post.excerpt}
                 </p>
                 
-                <div className="flex items-center justify-between mt-auto pt-6 border-t border-line">
+                <div className="flex items-center justify-between mt-auto pt-6 border-t border-border/60">
                   <div className="flex items-center gap-3">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-ink text-paper text-xs font-medium">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold">
                       {post.author.avatarInitials}
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-sm font-medium text-ink leading-none mb-1">{post.author.name}</span>
-                      <span className="text-xs text-graphite leading-none">{post.date}</span>
+                      <span className="text-sm font-semibold text-foreground leading-none mb-1">{post.author.name}</span>
+                      <span className="text-xs text-muted-foreground leading-none">{post.date}</span>
                     </div>
                   </div>
-                  <ArrowRight className="h-5 w-5 text-line group-hover:text-cobalt transition-colors" />
+                  <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
                 </div>
               </div>
             </Link>

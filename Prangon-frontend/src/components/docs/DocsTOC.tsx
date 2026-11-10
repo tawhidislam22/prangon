@@ -14,7 +14,6 @@ export function DocsTOC({ sections }: { sections: TOCItem[] }) {
   useEffect(() => {
     if (!sections.length) return;
 
-    const scrollContainer = document.getElementById("docs-content");
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -24,8 +23,8 @@ export function DocsTOC({ sections }: { sections: TOCItem[] }) {
         }
       },
       {
-        root: scrollContainer || null,
-        rootMargin: "-20px 0px -70% 0px",
+        root: null,
+        rootMargin: "-80px 0px -60% 0px",
         threshold: 0,
       }
     );

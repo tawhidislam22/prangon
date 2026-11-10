@@ -20,18 +20,20 @@ export function DocsLayout({ children, title, sections = [] }: DocsLayoutProps) 
   const pathname = usePathname();
 
   return (
-    <div className="w-full h-[calc(100vh-4rem)] overflow-hidden bg-background text-foreground flex flex-col">
-      <div className="flex-1 w-full max-w-[1536px] mx-auto flex overflow-hidden">
+    <div className="w-full bg-background text-foreground">
+      <div className="w-full max-w-[1536px] mx-auto flex items-start">
         
-        {/* Desktop Left Navigation Sidebar - FIXED / PINNED */}
-        <aside className="hidden lg:flex flex-col w-64 xl:w-72 shrink-0 border-r border-border/70 h-full overflow-y-auto px-6 py-6 scrollbar-thin">
-          <DocsSidebar />
+        {/* Desktop Left Navigation Sidebar - STICKY PINNED TO VIEWPORT */}
+        <aside className="hidden lg:block w-64 xl:w-72 shrink-0 border-r border-border/70 sticky top-16 h-[calc(100vh-4rem)]">
+          <div className="h-full overflow-y-auto px-6 py-6 scrollbar-thin">
+            <DocsSidebar />
+          </div>
         </aside>
 
-        {/* Center Documentation Content - ONLY THIS PART SCROLLS */}
+        {/* Center Documentation Content */}
         <main
           id="docs-content"
-          className="flex-1 h-full min-w-0 overflow-y-auto px-6 sm:px-10 lg:px-12 xl:px-16 py-8 md:py-10 scroll-smooth"
+          className="flex-1 min-w-0 px-6 sm:px-10 lg:px-12 xl:px-16 py-8 md:py-10"
         >
           <div className="max-w-[76ch] mx-auto">
             {/* Mobile Sidebar Trigger & Breadcrumbs */}
@@ -45,7 +47,7 @@ export function DocsLayout({ children, title, sections = [] }: DocsLayoutProps) 
                 </SheetTrigger>
                 <SheetContent side="left" className="w-80 pr-0 bg-card border-border">
                   <SheetTitle className="sr-only">Documentation Menu</SheetTitle>
-                  <div className="h-full overflow-y-auto pr-6 pt-4">
+                  <div className="h-full overflow-y-auto pr-6 pt-4 scrollbar-thin">
                     <DocsSidebar />
                   </div>
                 </SheetContent>
@@ -76,27 +78,18 @@ export function DocsLayout({ children, title, sections = [] }: DocsLayoutProps) 
             </div>
 
             {/* Previous / Next Navigation */}
-            <div className="mt-12">
+            <div className="mt-12 pb-16">
               <PrevNextNav href={pathname} />
-            </div>
-
-            {/* In-flow Documentation Footer */}
-            <div className="mt-16 pt-8 border-t border-border/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground pb-12">
-              <p>© {new Date().getFullYear()} PRANGON Inc. All rights reserved.</p>
-              <div className="flex items-center gap-4">
-                <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
-                <Link href="/terms" className="hover:text-foreground transition-colors">Terms</Link>
-                <Link href="/security" className="hover:text-foreground transition-colors">Security</Link>
-                <Link href="/contact" className="hover:text-foreground transition-colors">Support</Link>
-              </div>
             </div>
           </div>
         </main>
 
-        {/* Desktop Right TOC Sidebar - FIXED / PINNED */}
+        {/* Desktop Right TOC Sidebar - STICKY PINNED TO VIEWPORT */}
         {sections.length > 0 && (
-          <aside className="hidden xl:flex flex-col w-56 2xl:w-64 shrink-0 border-l border-border/70 h-full overflow-y-auto px-6 py-8 scrollbar-thin">
-            <DocsTOC sections={sections} />
+          <aside className="hidden xl:block w-56 2xl:w-64 shrink-0 border-l border-border/70 sticky top-16 h-[calc(100vh-4rem)]">
+            <div className="h-full overflow-y-auto px-6 py-8 scrollbar-thin">
+              <DocsTOC sections={sections} />
+            </div>
           </aside>
         )}
       </div>

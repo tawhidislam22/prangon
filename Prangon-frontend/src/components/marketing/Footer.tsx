@@ -2,12 +2,19 @@
 
 import Link from "next/link";
 import React, { useState } from "react";
+import { usePathname } from "next/navigation";
 import { PrangonLogo } from "@/components/PrangonLogo";
 import { Twitter, Github, Linkedin, ArrowRight, Check } from "lucide-react";
 
 export function Footer() {
+  const pathname = usePathname();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "success">("idle");
+
+  // On documentation reader pages, the layout has fixed sidebars with an independent docs scroll
+  if (pathname?.startsWith("/docs") && pathname !== "/docs") {
+    return null;
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

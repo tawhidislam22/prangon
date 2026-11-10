@@ -1,10 +1,10 @@
 import Link from "next/link";
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { getUserInfo, logoutUser } from "@/services/auth.services";
-import { getDefaultDashboardRoute } from "@/lib/authUtils";
+import { getUserInfo } from "@/services/auth.services";
 import { PrangonLogo } from "@/components/PrangonLogo";
-
+import { ModeToggle } from "@/components/mode-toggle";
+import { UserNav } from "@/components/marketing/UserNav";
 import { httpClient } from "@/lib/axios/httpClient";
 
 export async function Navbar() {
@@ -41,22 +41,21 @@ export async function Navbar() {
           <Link href="/security" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Security</Link>
           <Link href="/docs" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Docs</Link>
         </nav>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          {/* Light / Dark Mode Toggle */}
+          <ModeToggle />
+
           {userInfo ? (
             <>
-              <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg shadow-xs font-medium">
+              <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg shadow-xs font-medium text-xs sm:text-sm h-9 px-3.5">
                 <Link href={dashboardRoute}>Dashboard</Link>
               </Button>
-              <form action={logoutUser}>
-                <Button type="submit" variant="outline" className="rounded-lg text-destructive hover:bg-destructive/10 border-border">
-                  Logout
-                </Button>
-              </form>
+              <UserNav user={userInfo} dashboardRoute={dashboardRoute} />
             </>
           ) : (
             <>
-              <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Login</Link>
-              <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg shadow-xs font-medium">
+              <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2">Login</Link>
+              <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg shadow-xs font-medium text-xs sm:text-sm h-9 px-3.5">
                 <Link href="/register">Get started</Link>
               </Button>
             </>

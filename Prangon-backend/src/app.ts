@@ -17,7 +17,12 @@ const app: Application = express();
 app.set("query parser", (str : string) => qs.parse(str));
 
 app.set("view engine", "ejs");
-app.set("views",path.resolve(process.cwd(), `src/app/templates`) )
+// Use fileURLToPath-safe resolution so EJS templates resolve on both
+// local dev and Vercel serverless (where process.cwd() may differ).
+import { fileURLToPath } from "url";
+const __filename_app = fileURLToPath(import.meta.url);
+const __dirname_app = path.dirname(__filename_app);
+app.set("views", path.resolve(__dirname_app, "app/templates"));
 
 import { PaymentController } from "./app/module/payment/payment.controller";
 

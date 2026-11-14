@@ -1,0 +1,12 @@
+node_modules
+dist
+.env
+*.log
+prisma/migrations
+build_docs.mjs
+export_class_png.mjs
+export_pngs.mjs
+export_pngs.mjs
+generate_pdf.mjs
+generate_scenarios.mjs
+update_admin_uc.mjs

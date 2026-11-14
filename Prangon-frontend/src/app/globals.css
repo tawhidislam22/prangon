@@ -213,3 +213,28 @@ input:-webkit-autofill:active {
 .animate-indeterminate {
   animation: indeterminate 1.4s ease-in-out infinite;
 }
+
+/* PWA & Mobile Standalone Safe Area Insets */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .safe-left {
+    padding-left: env(safe-area-inset-left);
+  }
+  .safe-right {
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* Standalone mobile optimizations */
+@media all and (display-mode: standalone) {
+  html, body {
+    overscroll-behavior-y: contain;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+

@@ -28,23 +28,13 @@ export default async function WorkspaceLayout({
   }
 
   if (!workspace) {
-    if (workspaceSlug === "my-workspace") {
-      workspace = allWorkspaces[0] || {
-        id: "my-workspace",
-        name: "My Workspace",
-        slug: "my-workspace",
-        userId: "owner",
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        onboardingStatus: "COMPLETED",
-      };
-    } else if (allWorkspaces.length > 0) {
-      redirect(`/owner/dashboard`);
+    if (allWorkspaces.length > 0) {
+      workspace = allWorkspaces[0];
     } else {
       workspace = {
-        id: workspaceSlug,
-        name: workspaceSlug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
-        slug: workspaceSlug,
+        id: workspaceSlug || "my-workspace",
+        name: (workspaceSlug || "My Workspace").replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
+        slug: workspaceSlug || "my-workspace",
         userId: "owner",
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),

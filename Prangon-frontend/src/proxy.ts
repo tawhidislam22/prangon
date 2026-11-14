@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getDefaultDashboardRoute, getRouteOwner, isAuthRoute, UserRole } from "./lib/authUtils";
+import { getDefaultDashboardRoute, getRouteOwner, isAuthRoute, isValidRedirectForRole, UserRole } from "./lib/authUtils";
 import { jwtUtils } from "./lib/jwtUtils";
 import { isTokenExpiringSoon } from "./lib/tokenUtils";
 import { getNewTokensWithRefreshToken, getUserInfo } from "./services/auth.services";
@@ -130,18 +130,28 @@ export async function proxy(request: NextRequest) {
                 if (pathname !== "/verify-email") {
                     const verifyEmailUrl = new URL("/verify-email", request.url);
                     if (email) verifyEmailUrl.searchParams.set("email", email);
+                    if (pathWithQuery && pathWithQuery !== "/" && pathWithQuery !== "/verify-email") {
+                        verifyEmailUrl.searchParams.set("redirect", pathWithQuery);
+                    }
                     return attachCookies(NextResponse.redirect(verifyEmailUrl));
                 }
                 return attachCookies(NextResponse.next());
             }
             if (emailVerified === true && pathname === "/verify-email") {
-                return attachCookies(NextResponse.redirect(new URL(getDefaultDashboardRoute(userRole as UserRole), request.url)));
+                const targetRedirect = request.nextUrl.searchParams.get("redirect");
+                const destination = targetRedirect && isValidRedirectForRole(targetRedirect, userRole as UserRole)
+                    ? targetRedirect
+                    : getDefaultDashboardRoute(userRole as UserRole);
+                return attachCookies(NextResponse.redirect(new URL(destination, request.url)));
             }
 
             if (needPasswordChange === true) {
                 if (pathname !== "/reset-password") {
                     const resetPasswordUrl = new URL("/reset-password", request.url);
                     if (email) resetPasswordUrl.searchParams.set("email", email);
+                    if (pathWithQuery && pathWithQuery !== "/" && pathWithQuery !== "/reset-password") {
+                        resetPasswordUrl.searchParams.set("redirect", pathWithQuery);
+                    }
                     return attachCookies(NextResponse.redirect(resetPasswordUrl));
                 }
                 return attachCookies(NextResponse.next());

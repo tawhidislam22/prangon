@@ -5,20 +5,36 @@ import { getCurrentWorkspaceSlug } from "@/lib/workspaceUtils";
 import { httpClient } from "@/lib/axios/httpClient";
 import { revalidatePath } from "next/cache";
 
-export async function inviteMemberAction( formData: FormData) {
-  const email = formData.get("email") as string;
-  const role = formData.get("role") as string;
+export async function inviteMemberAction(formData: FormData) {
+  const email = (formData.get("email") as string)?.trim().toLowerCase();
+  const role = (formData.get("role") as string) || "MEMBER";
+  const formWorkspaceSlug = (formData.get("workspaceSlug") as string)?.trim();
+  const workspaceSlug = formWorkspaceSlug || (await getCurrentWorkspaceSlug());
+
+  if (!email) {
+    return { success: false, message: "Email is required." };
+  }
+
+  if (!workspaceSlug) {
+    return { success: false, message: "Workspace not found. Please reload and try again." };
+  }
 
   try {
-    await httpClient.post("/invitations", {
-      workspaceSlug: await getCurrentWorkspaceSlug(),
+    const res = await httpClient.post<any>("/invitations", {
+      workspaceSlug,
       email,
       role,
     });
     
     revalidatePath(`/owner/members`);
     revalidatePath(`/owner/members/invitations`);
-    return { success: true, message: "Invitation sent successfully." };
+    const token = res.data?.token;
+    return {
+      success: true,
+      message: "Invitation sent successfully.",
+      token,
+      workspaceSlug,
+    };
   } catch (error: any) {
     return { 
       success: false, 

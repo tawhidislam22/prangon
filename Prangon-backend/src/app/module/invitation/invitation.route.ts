@@ -6,6 +6,12 @@ import { invitationController } from "./invitation.controller";
 
 const router = Router();
 
+// Get public invitation details by token
+router.get(
+    "/details/:token",
+    invitationController.getInvitationDetails
+);
+
 // Accept invitation
 router.post(
     "/accept",

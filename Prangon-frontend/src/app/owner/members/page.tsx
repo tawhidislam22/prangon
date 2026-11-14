@@ -94,7 +94,7 @@ export default async function WorkspaceMembersPage({
             {members.length} Total
           </Badge>
         }
-        actions={<InviteMemberDialog />}
+        actions={<InviteMemberDialog workspaceSlug={workspaceSlug} />}
       />
 
       {/* Nav Tabs: Members vs Invitations */}

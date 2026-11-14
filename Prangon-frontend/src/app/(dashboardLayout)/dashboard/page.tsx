@@ -45,13 +45,8 @@ export default async function DashboardPage() {
   const isMember = userInfo?.role === "MEMBER";
 
   // If the user has workspaces, route directly to their dashboard
-  if (!isMember && workspaces.length > 0) {
+  if (workspaces.length > 0) {
     redirect(`/owner/dashboard`);
-  }
-
-  if (isMember && workspaces.length > 0) {
-    // Render the Member dashboard right here!
-    return <MemberDashboardWrapper workspaceSlug={workspaces[0].slug} />;
   }
 
   return (

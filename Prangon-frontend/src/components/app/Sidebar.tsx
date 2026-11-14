@@ -64,7 +64,7 @@ export function Sidebar({
       items: [
         {
           name: "Dashboard",
-          href: role === "MEMBER" ? "/dashboard" : `/owner/dashboard`,
+          href: `/owner/dashboard`,
           icon: LayoutDashboard,
           visible: true,
         },

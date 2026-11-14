@@ -49,7 +49,7 @@ export default async function PendingInvitationsPage({
             {invitations.length} Pending
           </Badge>
         }
-        actions={<InviteMemberDialog />}
+        actions={<InviteMemberDialog workspaceSlug={workspaceSlug} />}
       />
 
       {/* Nav Tabs: Members vs Invitations */}
@@ -105,6 +105,8 @@ export default async function PendingInvitationsPage({
                     <TableCell className="text-right">
                       <InvitationRowActions
                         invitationId={inv.id}
+                        workspaceSlug={workspaceSlug}
+                        token={inv.token}
                       />
                     </TableCell>
                   </TableRow>

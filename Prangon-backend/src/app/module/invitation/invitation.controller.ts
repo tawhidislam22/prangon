@@ -18,6 +18,18 @@ const createInvitation = catchAsync(async (req, res) => {
     });
 });
 
+const getInvitationDetails = catchAsync(async (req, res) => {
+    const token = (req.params.token || req.query.token) as string;
+    const result = await invitationService.getInvitationDetails(token);
+
+    sendResponse(res, {
+        httpStatusCode: status.OK,
+        success: true,
+        message: "Invitation details fetched successfully",
+        data: result,
+    });
+});
+
 const acceptInvitation = catchAsync(async (req, res) => {
     const { token } = req.body;
     const { userId, email } = req.user;
@@ -70,6 +82,7 @@ const revokeInvitation = catchAsync(async (req, res) => {
 
 export const invitationController = {
     createInvitation,
+    getInvitationDetails,
     acceptInvitation,
     listInvitations,
     resendInvitation,

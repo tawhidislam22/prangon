@@ -1,25 +1,15 @@
 {
-  "version": 2,
-  "buildCommand": "prisma generate && tsup src/app.ts --format esm --target esnext --out-dir dist --bundle --no-splitting --dts false",
-  "builds": [
-    {
-      "src": "api/index.ts",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": ["src/app/templates/**"]
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/api/index.ts"
-    }
-  ],
   "functions": {
-    "api/index.ts": {
+    "api/index.js": {
+      "includeFiles": "src/app/templates/**",
       "maxDuration": 30,
       "memory": 1024
     }
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api"
+    }
+  ]
 }

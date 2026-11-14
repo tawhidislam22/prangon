@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { fileURLToPath } from "url";
 import { toNodeHandler } from "better-auth/node";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Application, Request, Response } from "express";
+import fs from "fs";
 import path from "path";
 import qs from "qs";
 import { envVars } from "./app/config/env";
@@ -17,11 +17,10 @@ const app: Application = express();
 app.set("query parser", (str: string) => qs.parse(str));
 
 app.set("view engine", "ejs");
-// Resolve EJS templates path relative to this file so it works both
-// locally (src/app.ts) and on Vercel serverless (compiled dist/app.js).
-const __filename_app = fileURLToPath(import.meta.url);
-const __dirname_app = path.dirname(__filename_app);
-app.set("views", path.resolve(__dirname_app, "app/templates"));
+const templatesDir = fs.existsSync(path.resolve(process.cwd(), "src/app/templates"))
+    ? path.resolve(process.cwd(), "src/app/templates")
+    : path.resolve(process.cwd(), "templates");
+app.set("views", templatesDir);
 
 // Stripe webhook — must be registered before express.json() to get raw body
 app.post("/webhook", express.raw({ type: "application/json" }), PaymentController.handleStripeWebhookEvent);

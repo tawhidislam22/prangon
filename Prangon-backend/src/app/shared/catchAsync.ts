@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { NextFunction, Request, RequestHandler, Response } from "express";
+import type { RequestHandler } from "express";
 
-export const catchAsync = (fn: RequestHandler) => {
-    return async (req: Request, res: Response, next: NextFunction) => {
+export const catchAsync = (handler: RequestHandler): RequestHandler => {
+    return async (req, res, next) => {
         try {
-            await fn(req, res, next);
-        } catch (error: any) {
+            await handler(req, res, next);
+        } catch (error: unknown) {
             next(error);
         }
-    }
-}
+    };
+};
